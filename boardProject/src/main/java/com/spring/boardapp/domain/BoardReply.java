@@ -7,7 +7,6 @@ public class BoardReply {
     private String depth;
     private String reply_content;
     private String reply_writer;
-    private String reply_password;
     private String reply_datetime;
     
     public String getReply_id() {
@@ -45,12 +44,6 @@ public class BoardReply {
 	}
 	public void setReply_writer(String reply_writer) {
 		this.reply_writer = reply_writer;
-	}
-	public String getReply_password() {
-		return reply_password;
-	}
-	public void setReply_password(String reply_password) {
-		this.reply_password = reply_password;
 	}
 	public String getReply_datetime() {
 		return reply_datetime;

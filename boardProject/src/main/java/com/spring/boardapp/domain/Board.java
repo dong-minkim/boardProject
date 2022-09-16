@@ -5,8 +5,10 @@ public class Board {
 	private String title;
 	private String content;
 	private String writer;
-	private String password;
+	private String views;
 	private String regist_datetime;
+	private String modify_datetime;
+	
 	
 	public String getId() {
 		return id;
@@ -32,16 +34,22 @@ public class Board {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public String getPassword() {
-		return password;
+	public String getViews() {
+		return views;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setViews(String views) {
+		this.views = views;
 	}
 	public String getRegist_datetime() {
 		return regist_datetime;
 	}
 	public void setRegist_datetime(String regist_datetime) {
 		this.regist_datetime = regist_datetime;
+	}
+	public String getModify_datetime() {
+		return modify_datetime;
+	}
+	public void setModify_datetime(String modify_datetime) {
+		this.modify_datetime = modify_datetime;
 	}
 }
