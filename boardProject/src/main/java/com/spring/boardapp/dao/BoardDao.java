@@ -8,34 +8,34 @@ import com.spring.boardapp.domain.BoardReply;
 
 public interface BoardDao {
 	
-	//°Ô½Ã±Û µî·Ï
+	//ê²Œì‹œê¸€ ì‚½ì…
 	int insertBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û ÀĞ±â
-	Board getBoardDetail(Map<String, Object> paramMap);
+	//ê²Œì‹œê¸€ ì½ê¸°
+	Board getBoardDetail(String id);
 	
-	//°Ô½Ã±Û ¼öÁ¤
+	//ê²Œì‹œê¸€ ìˆ˜ì •
 	int updateBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û »èÁ¦
+	//ê²Œì‹œê¸€ ì‚­ì œ
 	int deleteBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û List
-	List<Board> getBoardList(Map<String, Object> paramMap);
+	//ê²Œì‹œê¸€ List
+	List<Board> getBoardList();
 	
-	//Á¶È¸¼ö Áõ°¡
+	//ì¡°íšŒìˆ˜ ì¦ê°€
 	int updateBoardViews(Map<String, Object> paramMap);
 //	
-//	//´ñ±Û µî·Ï
+//	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 //	int insertReply(Map<String, Object> paramMap);
 //	
-//	//´ñ±Û List
+//	//ï¿½ï¿½ï¿½ List
 //	List<BoardReply> getReplyList(Map<String, Object> paramMap);
 //	
-//	//´ñ±Û ¼öÁ¤
+//	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //	int updateReply(Map<String, Object> paramMap);
 //	
-//	//´ñ±Û »èÁ¦
+//	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //	int deleteReply(Map<String, Object> paramMap);
 	
 }

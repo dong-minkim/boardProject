@@ -16,7 +16,7 @@
 			0
 		)
 	</insert>
-	<select id="selectBoard" parameterType="java.util.HashMap" resultType="Board">
+	<select id="selectBoard" parameterType="String" resultType="Board">
         SELECT id,
                title,
                content, 
@@ -39,7 +39,7 @@
     	FROM board
     	WHERE id = #{id}
     </delete>
-  	<select id="selectBoardList" parameterType="java.util.HashMap" resultType="Board">
+  	<select id="selectBoardList" resultType="Board">
         SELECT id,
                title,
                content, 

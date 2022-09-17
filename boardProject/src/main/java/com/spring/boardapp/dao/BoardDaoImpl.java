@@ -22,8 +22,8 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public Board getBoardDetail(Map<String, Object> paramMap) {
-		return sqlSession.selectOne("selectBoard", paramMap);
+	public Board getBoardDetail(String id) {
+		return sqlSession.selectOne("selectBoard", id);
 	}
 	
 	@Override
@@ -39,9 +39,9 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public List<Board> getBoardList(Map<String, Object> paramMap) {
+	public List<Board> getBoardList() {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("selectBoardList", paramMap);
+		return sqlSession.selectList("selectBoardList");
 	}
 	
 	@Override

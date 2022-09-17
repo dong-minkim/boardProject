@@ -11,13 +11,13 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	
-	<context:property-placeholder location="classpath:properties/db.properties" />
+	  
+	<context:property-placeholder location="classpath:/properties/database.properties" />
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="${db.driver}" />
 		<property name="url" value="${db.url}" />
 		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password" />
+		<property name="password" value="${db.password}" />
 	</bean>
 
 
@@ -25,7 +25,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
-		<property name="mapperLocations" value="classpath:mybatisMappers/**/*.xml" />
+		<property name="mapperLocations" value="classpath:mybatisMappers/*.xml" />
 	</bean>
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

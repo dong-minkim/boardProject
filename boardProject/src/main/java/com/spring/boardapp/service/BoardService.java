@@ -7,19 +7,19 @@ import com.spring.boardapp.domain.Board;
 
 public interface BoardService {
 	
-	//°Ô½Ã±Û µî·Ï
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½
 	int insertBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û ÀÐ±â
-	Board getBoardDetail(Map<String, Object> paramMap);
+	//ï¿½Ô½Ã±ï¿½ ï¿½Ð±ï¿½
+	Board getBoardDetail(String id);
 	
-	//°Ô½Ã±Û ¼öÁ¤
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int updateBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û »èÁ¦
+	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
 	int deleteBoard(Map<String, Object> paramMap);
 	
-	//°Ô½Ã±Û List
-	List<Board> getBoardList(Map<String, Object> paramMap);
+	//ï¿½Ô½Ã±ï¿½ List
+	List<Board> getBoardList();
 	
 }
