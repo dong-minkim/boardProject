@@ -24,7 +24,7 @@ public interface BoardDao {
 	List<Board> getBoardList();
 	
 	//조회수 증가
-	int updateBoardViews(Map<String, Object> paramMap);
+	int updateBoardViews(String id);
 //	
 //	//��� ���
 //	int insertReply(Map<String, Object> paramMap);

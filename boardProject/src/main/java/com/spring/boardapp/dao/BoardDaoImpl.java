@@ -45,9 +45,9 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public int updateBoardViews(Map<String, Object> paramMap) {
+	public int updateBoardViews(String id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("updateBoardViews", id);
 	}
 	
 }

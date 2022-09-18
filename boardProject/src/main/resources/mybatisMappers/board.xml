@@ -34,9 +34,8 @@
     	    modify_datetime = NOW()
     	WHERE id = #{id}
     </update>
-    <delete id="deleteBoard" parameterType="java.util.HashMap">
-    	DELETE
-    	FROM board
+    <delete id="deleteBoard" parameterType="String">
+    	DELETE FROM board
     	WHERE id = #{id}
     </delete>
   	<select id="selectBoardList" resultType="Board">
@@ -50,7 +49,7 @@
   		FROM board
   		ORDER BY id
   	</select>
-  	<update id="updateBoardViews" parameterType="java.util.HashMap">
+  	<update id="updateBoardViews" parameterType="String">
   		UPDATE board
   		SET views = views + 1
   		WHERE id = #{id}

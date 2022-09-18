@@ -8,8 +8,8 @@
 </head>
 <body>
 	<h2>게시글 작성</h2>
-	<form action="/regist">
-	<table border="1" width="100%">
+	<form action="/regist", method = "post">
+	<table border="1" width="1000px">
 		<caption><strong>* 표시는 필수입력</strong></caption>
 		
 		<colgroup>
@@ -19,22 +19,24 @@
 		
 		<tr>
 			<th>제목 *</th>
-			<td><input type="text" name="title" id="title" required />
+			<td><input type="text" style="width:300px;border:none" name="title" id="title" required />
 		</tr>
 		<tr>
 			<th>작성자 *</th>
-			<td><input type="text" name="writer" id="writer" required />
+			<td><input type="text" style="width:300px;border:none" name="writer" id="writer" required />
 		</tr>
 		<tr height = "300px">
 			<th>내용</th>
-			<td><input type="text" width="90%" height="290px" name="content" id="content" />
+			<td><textarea style="border: none;" rows="40" cols="120" name="content"></textarea>
 		</tr>
 	</table>
-	<div>
-		<input type="button" value="목록" onclick="location.href='/list'">
+	<table width="1000px">
+		<tr>
+			<td align="right"><input type="button" value="목록" onclick="location.href='/list'">
 		<input type="reset" value="초기화" />
-		<input type="submit" value="등록" />
-	</div>
+		<input type="submit" value="등록" /></td>
+		</tr>
+	</table>
 	</form>
 </body>
 </html>

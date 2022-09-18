@@ -29,13 +29,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board getBoardDetail(String id) {
-		// TODO Auto-generated method stub
+		boardDao.updateBoardViews(id);
 		return boardDao.getBoardDetail(id);
 	}
 
 	@Override
 	public boolean updateBoard(Map<String, Object> paramMap) {
-		if(boardDao.updateBoard(paramMap)==1) return true;
+		int result = boardDao.updateBoard(paramMap);
+		if(result == 1) return true;
 		else return false;
 	}
 

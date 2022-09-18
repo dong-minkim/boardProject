@@ -8,14 +8,18 @@
 <title>게시글(${board.id })</title>
 </head>
 <body>
-	<div>
-		<input type="button" value="목록" onclick="location.href='/list'">
-		<input type="button" value="수정" onclick="location.href='/edit/${board.id}'">
-	</div>
+	<table width="1000px">
+		<tr>
+			<td align="left"><input type="button" value="목록" onclick="location.href='/list'"></td>
+			<td align="right"><div><input type="button" value="수정" onclick="location.href='/edit/${board.id}'">
+								   <input type="button" value="삭제" onclick="location.href='/delete/${board.id}'"></div></td>
+		</tr>
+	</table>
 	<table border="1" width="1000px">
 		<tr>
 			<td width="700px"><b>${board.title }</b></td>
-			<td align="right">${board.regist_datetime }</td>		
+			<td align="left"><div>등록: ${board.regist_datetime }<br/>
+			수정: ${board.modify_datetime }</div></td>		
 		</tr>
 		<tr>
 			<td align="left" width="700px">${board.writer }</td>

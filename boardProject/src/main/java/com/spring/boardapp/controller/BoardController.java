@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.boardapp.domain.Board;
 import com.spring.boardapp.service.BoardService;
 
 @Controller
-@RequestMapping("/")
 public class BoardController {
 
 	@Resource(name = "boardService")
@@ -26,38 +26,46 @@ public class BoardController {
 	@RequestMapping(value = "/regist")
 	public String registBoard(@RequestParam Map<String, Object> paramMap, Model model) {
 		if (paramMap == null)
-			return "/board/boardWriter";
+			return "board/boardRegister";
 		else {
 			int result = boardService.insertBoard(paramMap);
 			if (result > 0)
-				return "redirect:/board/boardList";
+				return "redirect:list";
 			else
-				return "/board/boardWriter";
+				return "/board/boardRegister";
 		}
 	}
 
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	public String getBoard(@PathVariable String id, Model model) {
-		model.addAttribute("board", boardService.getBoardDetail(id));
-		return "board/boardDetail";
+		Board board = boardService.getBoardDetail(id);
+		if (board == null)
+			return "board/boardList";
+		else {
+			model.addAttribute("board", board);
+			return "board/boardDetail";
+
+		}
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String updateBoard(@PathVariable String id, Model model) {
 		model.addAttribute("board",boardService.getBoardDetail(id));
-		return "/board/boardEdit";
+		System.out.println(model.toString());
+		return "board/boardEdit";
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public String updateBoard(@RequestParam Map<String, Object> paramMap, Model model) {
-		boardService.updateBoard(paramMap);
-		return "redirect:board/boardList";
+		System.out.println("post "+paramMap.toString());
+		if(boardService.updateBoard(paramMap)) return "redirect:/list";
+		else return "redirect:/detail/{id}";
 	}
 	
-	@RequestMapping(value = "/delete")
-	public String deleteBoard(@RequestParam String id) {
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteBoard(@PathVariable String id) {
 		boardService.deleteBoard(id);
-		return "redirect:/board/boardList";
+		return "redirect:/list";
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
