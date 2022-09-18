@@ -27,7 +27,7 @@
 		</tr>
 		<tr height = "300px">
 			<th>내용</th>
-			<td><input type="text" name="content" id="content" />
+			<td><input type="text" width="90%" height="290px" name="content" id="content" />
 		</tr>
 	</table>
 	<div>

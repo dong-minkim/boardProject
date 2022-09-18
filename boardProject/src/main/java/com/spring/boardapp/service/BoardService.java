@@ -14,10 +14,10 @@ public interface BoardService {
 	Board getBoardDetail(String id);
 	
 	//�Խñ� ����
-	int updateBoard(Map<String, Object> paramMap);
+	boolean updateBoard(Map<String, Object> paramMap);
 	
 	//�Խñ� ����
-	int deleteBoard(Map<String, Object> paramMap);
+	boolean deleteBoard(String id);
 	
 	//�Խñ� List
 	List<Board> getBoardList();

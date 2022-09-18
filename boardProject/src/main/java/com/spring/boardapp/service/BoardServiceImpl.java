@@ -34,15 +34,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int updateBoard(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean updateBoard(Map<String, Object> paramMap) {
+		if(boardDao.updateBoard(paramMap)==1) return true;
+		else return false;
 	}
 
 	@Override
-	public int deleteBoard(Map<String, Object> paramMap) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean deleteBoard(String id) {
+		if(boardDao.deleteBoard(id)==1) return true;
+		else return false;
 	}
 
 	@Override

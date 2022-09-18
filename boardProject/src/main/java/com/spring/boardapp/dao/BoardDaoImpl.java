@@ -33,9 +33,9 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	
 	@Override
-	public int deleteBoard(Map<String, Object> paramMap) {
+	public int deleteBoard(String id) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("deleteBoard", paramMap);
+		return sqlSession.delete("deleteBoard", id);
 	}
 	
 	@Override

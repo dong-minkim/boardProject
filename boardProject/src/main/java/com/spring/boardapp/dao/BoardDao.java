@@ -18,7 +18,7 @@ public interface BoardDao {
 	int updateBoard(Map<String, Object> paramMap);
 	
 	//게시글 삭제
-	int deleteBoard(Map<String, Object> paramMap);
+	int deleteBoard(String id);
 	
 	//게시글 List
 	List<Board> getBoardList();

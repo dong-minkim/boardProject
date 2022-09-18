@@ -8,6 +8,10 @@
 <title>게시글(${board.id })</title>
 </head>
 <body>
+	<div>
+		<input type="button" value="목록" onclick="location.href='/list'">
+		<input type="button" value="수정" onclick="location.href='/edit/${board.id}'">
+	</div>
 	<table border="1" width="1000px">
 		<tr>
 			<td width="700px"><b>${board.title }</b></td>
