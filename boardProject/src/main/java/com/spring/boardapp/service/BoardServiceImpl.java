@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.boardapp.dao.BoardDao;
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.paging.Paging;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -50,5 +51,18 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> getBoardList() {
 		// TODO Auto-generated method stub
 		return boardDao.getBoardList();
+	}
+	
+	@Override
+	public List<Board> getBoardListWithPaging(Map<String, Object> paramMap) {
+		int startBoardNum = ((Integer)paramMap.get("pageNum")-1) * (Integer)paramMap.get("pageAmount");
+		paramMap.put("startBoardNum", startBoardNum);
+		return boardDao.getBoardListWithPaging(paramMap);
+	}
+	
+	@Override
+	public int getBoardTotalCnt() {
+		// TODO Auto-generated method stub
+		return boardDao.getBoardTotalCnt();
 	}
 }

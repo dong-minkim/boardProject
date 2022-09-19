@@ -8,9 +8,11 @@
 <title>게시글 수정</title>
 </head>
 <body>
-	<h2>게시글 작성</h2>
+	<h2>게시글 수정</h2>
 	<form action="/edit/${board.id}" , method="post">
-		<table border="1" width="1000px">
+		<input type="hidden" name="pageNum" value="${pageNum }">
+		<input type="hidden" name="pageAmount" value="${pageAmount}" >
+ 		<table border="1" width="1000px">
 			<caption>
 				<strong>* 표시: 수정 가능</strong>
 			</caption>
@@ -31,13 +33,13 @@
 			</tr>
 			<tr height="300px">
 				<th>내용*</th>
-				<td><textarea style="border: none;" rows="40" cols="120"
-						name="content"></textarea>
+				<td><textarea style="border: none;" rows="40" cols="120" name="content" >${board.content }</textarea>
 			</tr>
 		</table>
 		<div>
-			<input type="button" value="목록" onclick="location.href='/list'">
-			<input type="reset" value="초기화" /> <input type="submit" value="수정" />
+			<input type="button" value="목록" onclick="location.href='/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">
+			<input type="reset" value="초기화" /> 
+			<input type="submit" value="수정" />
 		</div>
 	</form>
 </body>

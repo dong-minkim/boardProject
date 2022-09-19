@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.boardapp.domain.Board;
 import com.spring.boardapp.domain.BoardReply;
+import com.spring.boardapp.domain.paging.Paging;
 
 public interface BoardDao {
 	
@@ -22,6 +23,12 @@ public interface BoardDao {
 	
 	//게시글 List
 	List<Board> getBoardList();
+	
+	//페이징 게시글 List
+	List<Board> getBoardListWithPaging(Map<String, Object> paramMap);
+	
+	//게시글 전체 수
+	int getBoardTotalCnt();
 	
 	//조회수 증가
 	int updateBoardViews(String id);

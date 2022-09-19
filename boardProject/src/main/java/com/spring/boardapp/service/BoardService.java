@@ -7,19 +7,24 @@ import com.spring.boardapp.domain.Board;
 
 public interface BoardService {
 	
-	//�Խñ� ���
+	//게시글 등록
 	int insertBoard(Map<String, Object> paramMap);
 	
-	//�Խñ� �б�
+	//게시글 상세보기
 	Board getBoardDetail(String id);
 	
-	//�Խñ� ����
+	//게시글 수정
 	boolean updateBoard(Map<String, Object> paramMap);
 	
-	//�Խñ� ����
+	//게시글 삭제
 	boolean deleteBoard(String id);
 	
-	//�Խñ� List
+	//게시글 List
 	List<Board> getBoardList();
 	
+	//게시글 페이징 List
+	List<Board> getBoardListWithPaging(Map<String, Object> paramMap);
+
+	//게시글 전체 개수
+	int getBoardTotalCnt();
 }

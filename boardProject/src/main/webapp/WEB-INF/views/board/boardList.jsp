@@ -24,7 +24,7 @@
 		<c:forEach var="boardList" items="${boardList }">
 			<tr>
 				<td>${boardList.id }</td>
-				<td><a href="/detail/${boardList.id }">${boardList.title }</a></td>
+				<td><a href="/detail/${boardList.id }?pageNum=${pageMaker.pageNum}&pageAmount=${pageMaker.pageAmount}">${boardList.title }</a></td>
 				<td>${boardList.writer }</td>
 				<td>${boardList.views }</td>
 				<td>${boardList.regist_datetime }</td>
@@ -32,5 +32,25 @@
 			</tr>
 		</c:forEach>
 	</table>
+	
+	<div>
+		<c:if test="${pageMaker.prev }">
+			<a href="/list?pageNum=${pageMaker.startPage - 1 }&pageAmount=${pageMaker.pageAmount }">&lt;</a>
+		</c:if>
+		
+		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
+			<c:if test="${num == pageMaker.pageNum }">
+				<b>${num }</b>
+			</c:if>
+			<c:if test="${num != pageMaker.pageNum }">
+				<a href="/list?pageNum=${num }&pageAmount=${pageMaker.pageAmount}">${num }</a>
+			</c:if>
+		</c:forEach>
+		
+		<c:if test="${pageMaker.next }">
+			<a href="/list?pageNum=${pageMaker.endPage + 1 }&pageAmount=${pageMaker.pageAmount }">&gt;</a>
+		</c:if>
+	</div>
+	
 </body>
 </html>

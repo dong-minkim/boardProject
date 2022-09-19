@@ -8,11 +8,14 @@
 <title>게시글(${board.id })</title>
 </head>
 <body>
+	<h2>게시글(${board.id }) ${pageNum }</h2>
 	<table width="1000px">
 		<tr>
-			<td align="left"><input type="button" value="목록" onclick="location.href='/list'"></td>
-			<td align="right"><div><input type="button" value="수정" onclick="location.href='/edit/${board.id}'">
-								   <input type="button" value="삭제" onclick="location.href='/delete/${board.id}'"></div></td>
+			<td align="left">
+<%-- 			<form value = "목록" action="/list?pageNum=${pageMaker.pageNum }&pageAmount=${pageMaker.pageAmount}"></form> --%>
+			<input type="button" value="목록" onclick="location.href='/list?pageNum=${pageNum }&pageAmount=${pageAmount}'"></td>
+			<td align="right"><div><input type="button" value="수정" onclick="location.href='/edit/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">
+								   <input type="button" value="삭제" onclick="location.href='/delete/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'"></div></td>
 		</tr>
 	</table>
 	<table border="1" width="1000px">

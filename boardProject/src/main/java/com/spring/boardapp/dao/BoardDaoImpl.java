@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.paging.Paging;
 
 @Repository("boardDao")
 public class BoardDaoImpl implements BoardDao {
@@ -42,6 +43,18 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Board> getBoardList() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("selectBoardList");
+	}
+	
+	@Override
+	public List<Board> getBoardListWithPaging(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectBoardListWithPaging", paramMap);
+	}
+	
+	@Override
+	public int getBoardTotalCnt() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getBoardTotalCnt");
 	}
 	
 	@Override
