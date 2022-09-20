@@ -28,7 +28,7 @@ public interface BoardDao {
 	List<Board> getBoardListWithPaging(Map<String, Object> paramMap);
 	
 	//게시글 전체 수
-	int getBoardTotalCnt();
+	int getBoardTotalCnt(Map<String, Object> paramMap);
 	
 	//조회수 증가
 	int updateBoardViews(String id);

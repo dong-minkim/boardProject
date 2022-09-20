@@ -6,13 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 수정</title>
+<style>
+h2 {
+	text-align: center;
+}
+
+table {
+	margin: auto;
+}
+</style>
 </head>
 <body>
 	<h2>게시글 수정</h2>
 	<form action="/edit/${board.id}" , method="post">
-		<input type="hidden" name="pageNum" value="${pageNum }">
-		<input type="hidden" name="pageAmount" value="${pageAmount}" >
- 		<table border="1" width="1000px">
+		<input type="hidden" name="pageNum" value="${pageNum }"> <input
+			type="hidden" name="pageAmount" value="${pageAmount}">
+		<table border="1" width="1000px">
 			<caption>
 				<strong>* 표시: 수정 가능</strong>
 			</caption>
@@ -33,14 +42,20 @@
 			</tr>
 			<tr height="300px">
 				<th>내용*</th>
-				<td><textarea style="border: none;" rows="40" cols="120" name="content" >${board.content }</textarea>
+				<td><textarea style="border: none;" rows="40" cols="120"
+						name="content">${board.content }</textarea>
+			</tr>
+			<tr style="border: none">
+				<td colspan="2" align="right">
+					<div>
+						<input type="button" value="목록" onclick="location.href='/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">
+						<input type="reset" value="초기화" /> 
+						<input type="submit" value="수정" />
+					</div>
+				</td>
 			</tr>
 		</table>
-		<div>
-			<input type="button" value="목록" onclick="location.href='/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">
-			<input type="reset" value="초기화" /> 
-			<input type="submit" value="수정" />
-		</div>
+
 	</form>
 </body>
 </html>

@@ -9,9 +9,15 @@ public class Paging {
 	private boolean next;
 	private int total;
 	
-	public Paging(int pageNum, int pageAmount, int total) {
+	private String searchType;
+	private String searchWord;
+	
+
+	public Paging(int pageNum, int pageAmount, String searchType, String searchWord, int total) {
 		this.pageNum = pageNum;
 		this.pageAmount = pageAmount;
+		this.searchType = searchType;
+		this.searchWord = searchWord;
 		this.total = total;
 		
 		//끝 페이지
@@ -71,6 +77,22 @@ public class Paging {
 	}
 	public void setTotal(int total) {
 		this.total = total;
+	}
+	
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 	
 }

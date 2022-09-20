@@ -26,5 +26,5 @@ public interface BoardService {
 	List<Board> getBoardListWithPaging(Map<String, Object> paramMap);
 
 	//게시글 전체 개수
-	int getBoardTotalCnt();
+	int getBoardTotalCnt(Map<String, Object> paramMap);
 }

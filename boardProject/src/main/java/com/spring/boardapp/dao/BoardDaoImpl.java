@@ -48,13 +48,16 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<Board> getBoardListWithPaging(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
+		System.out.println("DAO");
+		System.out.println(paramMap.get("searchType"));
+		System.out.println(paramMap.get("searchWord"));
 		return sqlSession.selectList("selectBoardListWithPaging", paramMap);
 	}
 	
 	@Override
-	public int getBoardTotalCnt() {
+	public int getBoardTotalCnt(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("getBoardTotalCnt");
+		return sqlSession.selectOne("getBoardTotalCnt",paramMap);
 	}
 	
 	@Override

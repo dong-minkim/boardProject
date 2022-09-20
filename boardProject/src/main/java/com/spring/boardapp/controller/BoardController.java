@@ -39,7 +39,8 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-	public String getBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, Model model) {
+	public String getBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, 
+							@RequestParam(required=false) String searchType, @RequestParam(required=false) String searchWord,Model model) {
 		Board board = boardService.getBoardDetail(id);
 		if (board == null)
 			return "board/boardList";
@@ -47,6 +48,8 @@ public class BoardController {
 			model.addAttribute("board", board);
 			model.addAttribute("pageNum", pageNum);
 			model.addAttribute("pageAmount", pageAmount);
+			model.addAttribute("searchType",searchType);
+			model.addAttribute("searchWord",searchWord);
 			return "board/boardDetail";
 
 		}
@@ -75,22 +78,27 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String getBoardList(@RequestParam(required = false) String pageNum, @RequestParam(required = false) String pageAmount, Model model) {
+	public String getBoardList(@RequestParam(required = false) String pageNum, @RequestParam(required = false) String pageAmount,
+								@RequestParam(required=false) String searchType, @RequestParam(required=false) String searchWord, Model model) {
 
 		if(pageNum==null) pageNum="1";
-		if(pageAmount==null) pageAmount="2";
+		if(pageAmount==null) pageAmount="5";
+		if(searchType==null) searchType="";
+		if(searchWord==null) searchWord="";
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageNum", Integer.parseInt(pageNum));
 		map.put("pageAmount", Integer.parseInt(pageAmount));
+		map.put("searchWord", searchWord);
+		map.put("searchType", searchType);
+		
 		
 		List<Board> boardList = boardService.getBoardListWithPaging(map);
-		int total = boardService.getBoardTotalCnt();
+		int total = boardService.getBoardTotalCnt(map);
 		model.addAttribute("boardList", boardList);
 		
-		Paging paging = new Paging(Integer.parseInt(pageNum), Integer.parseInt(pageAmount), total);
+		Paging paging = new Paging(Integer.parseInt(pageNum), Integer.parseInt(pageAmount), searchType, searchWord, total);
 		model.addAttribute("pageMaker", paging);
-		
 		return "board/boardList";
 	}
 

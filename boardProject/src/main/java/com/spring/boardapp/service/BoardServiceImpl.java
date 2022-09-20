@@ -61,8 +61,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int getBoardTotalCnt() {
+	public int getBoardTotalCnt(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		return boardDao.getBoardTotalCnt();
+		return boardDao.getBoardTotalCnt(paramMap);
 	}
 }

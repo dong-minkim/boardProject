@@ -59,13 +59,26 @@
   				   views,
   				   date_format(regist_datetime, '%Y-%m-%d %H:%i:%s') regist_datetime,
                	   date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime
-            FROM board
-            ORDER BY id
+            FROM (
+            		SELECT *
+            		FROM board
+            		WHERE <if test="searchType=='title'">title LIKE CONCAT('%',#{searchWord},'%')</if>
+			  			  <if test="searchType=='writer'">writer LIKE CONCAT('%',#{searchWord},'%')</if>
+			  			  <if test="searchType=='content'">content LIKE CONCAT('%',#{searchWord},'%')</if>
+			  			  <if test="searchType=='tc'">title LIKE CONCAT('%',#{searchWord},'%') OR content LIKE CONCAT('%',#{searchWord},'%')</if>
+			  			  <if test="searchType==''">1=1</if>
+            	) A
+            ORDER BY regist_datetime DESC, id DESC
             LIMIT #{pageAmount} OFFSET #{startBoardNum}
 	</select>
-	<select id="getBoardTotalCnt" resultType="int">
+	<select id="getBoardTotalCnt" parameterType = "java.util.HashMap" resultType="int">
 		SELECT COUNT(*)
 		FROM board
+		WHERE <if test="searchType=='title'.toString()">title LIKE CONCAT('%',#{searchWord},'%')</if>
+			  <if test="searchType=='writer'.toString()">writer LIKE CONCAT('%',#{searchWord},'%')</if>
+			  <if test="searchType=='content'.toString()">content LIKE CONCAT('%',#{searchWord},'%')</if>
+			  <if test="searchType=='tc'.toString()">title LIKE CONCAT('%',#{searchWord},'%') OR content LIKE CONCAT('%',#{searchWord},'%')</if>
+			  <if test="searchType==''.toString()">1=1</if>
 	</select>
 	<update id="updateBoardViews" parameterType="String">
 		UPDATE board

@@ -4,12 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+	h2{
+		text-align: center;
+	}
+	table{
+		margin: auto;
+		
+	}
+</style>
 <title>게시글 작성</title>
 </head>
 <body>
 	<h2>게시글 작성</h2>
 	<form action="/regist", method = "post">
-	<table border="1" width="1000px">
+	<table border="1" width="930px">
 		<caption><strong>* 표시는 필수입력</strong></caption>
 		
 		<colgroup>
