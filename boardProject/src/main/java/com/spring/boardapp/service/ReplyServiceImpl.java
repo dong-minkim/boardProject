@@ -30,7 +30,7 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Override
 	public boolean updateReply(Reply reply) {
-		int result = replyDao.insertReply(reply);
+		int result = replyDao.updateReply(reply);
 		if (result ==1)
 			return true;
 		else

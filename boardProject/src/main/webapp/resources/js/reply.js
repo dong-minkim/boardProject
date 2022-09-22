@@ -43,6 +43,9 @@
  	}
  	
  	function update(reply, callback, error){
+ 	
+ 		console.log('reply_id: ' + reply.reply_id);
+ 		
  		$.ajax({
  			type : 'put',
  			url : '/reply/' + reply.reply_id,

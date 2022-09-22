@@ -33,6 +33,7 @@ public class ReplyController {
 																	 //@RequestBody: 요청을 해당 타입으로 변환 여기선 (JSON->Reply)
 		
 		int insertResult = replyService.insertReply(reply);
+		System.out.println("등록호출됨");
 		
 		return insertResult==1 ? new ResponseEntity<String>("success",HttpStatus.OK) :
 							new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,7 +53,7 @@ public class ReplyController {
 	public ResponseEntity<String> modify(@RequestBody Reply reply, @PathVariable String reply_id){
 		
 		reply.setReply_id(reply_id); //요청 데이터 댓글 번호 처리
-		System.out.println(reply_id);
+		System.out.println("수정 호출됨");
 		
 		return replyService.updateReply(reply) ? new ResponseEntity<String>("success",HttpStatus.OK) :
 												new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
