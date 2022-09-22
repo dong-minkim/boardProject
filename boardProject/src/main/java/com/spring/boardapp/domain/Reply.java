@@ -1,15 +1,15 @@
 package com.spring.boardapp.domain;
 
-public class BoardReply {
+public class Reply {
 	private String reply_id;
     private String board_id;
-    private String parent_id;
-    private String depth;
     private String reply_content;
     private String reply_writer;
     private String reply_datetime;
+    private String reply_updatetime;
     
-    public String getReply_id() {
+    
+	public String getReply_id() {
 		return reply_id;
 	}
 	public void setReply_id(String reply_id) {
@@ -20,18 +20,6 @@ public class BoardReply {
 	}
 	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
-	}
-	public String getParent_id() {
-		return parent_id;
-	}
-	public void setParent_id(String parent_id) {
-		this.parent_id = parent_id;
-	}
-	public String getDepth() {
-		return depth;
-	}
-	public void setDepth(String depth) {
-		this.depth = depth;
 	}
 	public String getReply_content() {
 		return reply_content;
@@ -50,5 +38,11 @@ public class BoardReply {
 	}
 	public void setReply_datetime(String reply_datetime) {
 		this.reply_datetime = reply_datetime;
+	}
+	public String getReply_updatetime() {
+		return reply_updatetime;
+	}
+	public void setReply_updatetime(String reply_updatetime) {
+		this.reply_updatetime = reply_updatetime;
 	}
 }

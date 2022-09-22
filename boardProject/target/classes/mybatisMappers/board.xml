@@ -16,8 +16,7 @@
 		0
 		)
 	</insert>
-	<select id="selectBoard" parameterType="String"
-		resultType="Board">
+	<select id="selectBoard" parameterType="String" resultType="Board">
 		SELECT id,
 		title,
 		content,
@@ -85,4 +84,5 @@
 		SET views = views + 1
 		WHERE id = #{id}
 	</update>
+	
 </mapper>

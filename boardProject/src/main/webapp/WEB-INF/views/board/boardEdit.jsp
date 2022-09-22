@@ -18,7 +18,7 @@ table {
 </head>
 <body>
 	<h2>게시글 수정</h2>
-	<form action="/edit/${board.id}" , method="post">
+	<form action="/board/edit/${board.id}" , method="post">
 		<input type="hidden" name="pageNum" value="${pageNum }"> <input
 			type="hidden" name="pageAmount" value="${pageAmount}">
 		<table border="1" width="1000px">
@@ -48,7 +48,7 @@ table {
 			<tr style="border: none">
 				<td colspan="2" align="right">
 					<div>
-						<input type="button" value="목록" onclick="location.href='/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">
+						<input type="button" value="목록" onclick="location.href='/board/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">
 						<input type="reset" value="초기화" /> 
 						<input type="submit" value="수정" />
 					</div>

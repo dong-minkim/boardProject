@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.boardapp.dao.ReplyDao">
+	<insert id="insertReply" parameterType="com.spring.boardapp.domain.Reply">
+		INSERT INTO board_reply(
+		board_id,
+		reply_content,
+		reply_writer
+		)VALUES(
+		#{board_id},
+		#{reply_content},
+		#{reply_writer}
+		)
+	</insert>
+	<select id="selectReply" parameterType="String" resultType="Reply">
+		SELECT *
+		FROM board_reply
+		WHERE board_id = #{board_id}
+	</select>
+	<update id="updateReply" parameterType="com.spring.boardapp.domain.Reply">
+		UPDATE board_reply
+		SET reply_content = #{reply_content},
+		reply_updatetime = NOW()
+		WHERE reply_id = #{reply_id}
+	</update>
+	<delete id="deleteReply" parameterType="String">
+		DELETE FROM board_reply
+		WHERE reply_id = #{reply_id}
+	</delete>
+</mapper>

@@ -17,7 +17,7 @@
 </head>
 <body>
 	<h2>게시글 작성</h2>
-	<form action="/regist", method = "post">
+	<form action="/board/regist", method = "post">
 	<table border="1" width="930px">
 		<caption><strong>* 표시는 필수입력</strong></caption>
 		
@@ -41,7 +41,7 @@
 	</table>
 	<table width="1000px">
 		<tr>
-			<td align="right"><input type="button" value="목록" onclick="location.href='/list'">
+			<td align="right"><input type="button" value="목록" onclick="location.href='/board/list'">
 		<input type="reset" value="초기화" />
 		<input type="submit" value="등록" /></td>
 		</tr>

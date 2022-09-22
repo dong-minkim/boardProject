@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.boardapp.dao.BoardDao;
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.Reply;
 import com.spring.boardapp.domain.paging.Paging;
 
 @Service("boardService")

@@ -23,7 +23,7 @@
 	<h2><c:if test="${pageMaker.searchWord!='' }">"${pageMaker.searchWord }" 검색 결과</c:if></h2>
 	<table width="930px">
 		<tr>
-			<td align="right"><input type="button" value="글 작성" onclick="location.href='/regist'">
+			<td align="right"><input type="button" value="글 작성" onclick="location.href='/board/regist'">
 		</tr>
 	</table>
 	<table border="1" width="930px">
@@ -38,7 +38,7 @@
 		<c:forEach var="boardList" items="${boardList }">
 			<tr>
 				<td>${boardList.id }</td>
-				<td><a href="/detail/${boardList.id }?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.pageNum}&pageAmount=${pageMaker.pageAmount}">${boardList.title }</a></td>
+				<td><a href="/board/detail/${boardList.id }?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.pageNum}&pageAmount=${pageMaker.pageAmount}">${boardList.title }</a></td>
 				<td>${boardList.writer }</td>
 				<td>${boardList.views }</td>
 				<td>${boardList.regist_datetime }</td>
@@ -50,7 +50,7 @@
 	
 	<div align="center">
 		<c:if test="${pageMaker.prev }">
-			<a href="/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.startPage - 1 }&pageAmount=${pageMaker.pageAmount }">&lt;</a>
+			<a href="/board/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.startPage - 1 }&pageAmount=${pageMaker.pageAmount }">&lt;</a>
 		</c:if>
 		
 		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1">
@@ -58,18 +58,18 @@
 				<b>${num }</b>
 			</c:if>
 			<c:if test="${num != pageMaker.pageNum }">
-				<a href="/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${num }&pageAmount=${pageMaker.pageAmount}">${num }</a>
+				<a href="/board/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${num }&pageAmount=${pageMaker.pageAmount}">${num }</a>
 			</c:if>
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next }">
-			<a href="/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.endPage + 1 }&pageAmount=${pageMaker.pageAmount }">&gt;</a>
+			<a href="/board/list?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.endPage + 1 }&pageAmount=${pageMaker.pageAmount }">&gt;</a>
 		</c:if>
 	</div>
 	
 	<br/>
 	
-	<form action="/list" method="get" style="text-align: center;">
+	<form action="/board/list" method="get" style="text-align: center;">
 		<div>
 			<select  name="searchType">
 				<option value="" <c:out value="${pageMaker.searchType==''? 'selected':'' }" />>all</option>

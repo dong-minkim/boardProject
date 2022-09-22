@@ -20,6 +20,7 @@ import com.spring.boardapp.domain.paging.Paging;
 import com.spring.boardapp.service.BoardService;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 
 	@Resource(name = "boardService")
@@ -32,7 +33,7 @@ public class BoardController {
 		else {
 			int result = boardService.insertBoard(paramMap);
 			if (result > 0)
-				return "redirect:list";
+				return "redirect:/board/list";
 			else
 				return "/board/boardRegister";
 		}
@@ -68,13 +69,13 @@ public class BoardController {
 		boardService.updateBoard(paramMap);
 		String pageNum = (String) paramMap.get("pageNum");
 		String pageAmount = (String) paramMap.get("pageAmount");
-		return "redirect:/detail/{id}?pageNum="+pageNum+"&pageAmount="+pageAmount;
+		return "redirect:/board/detail/{id}?pageNum="+pageNum+"&pageAmount="+pageAmount;
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount) {
 		boardService.deleteBoard(id);
-		return "redirect:/list?pageNum="+pageNum+"&pageAmount="+pageAmount;
+		return "redirect:/board/list?pageNum="+pageNum+"&pageAmount="+pageAmount;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
