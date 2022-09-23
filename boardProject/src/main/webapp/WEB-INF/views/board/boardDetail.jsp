@@ -89,7 +89,7 @@ table {
 		</div>
 	</div>
 
-
+	<button data-delete="hi"></button>
 
 	<!-- 댓글 -->
 	<script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -123,11 +123,12 @@ table {
 						str += "<li style='border-color: red; border: 1px solid;border-radius: 4px;'>";
 					    str += "<div><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
 						str += list[i].reply_datetime + "</small></div><p>" + list[i].reply_content +"</p>";
-						str += "<button id='replyDeleteBtn' data_reply_id='"+ list[i].reply_id + "'>삭제</button></li><br>";
+						str += "<input type=button class='replyDeleteBtn'  data-delete='"+ list[i].reply_id + "' value='삭제'></button></li><br>";
 					}
 					
 
 					replyUL.html(str);
+					$("input:button.replyDeleteBtn").on('click',replyDeleteBtn)
 
 				 });//end function
 			}//end showList
@@ -158,19 +159,23 @@ table {
 				}
 			})
 			
-			$('#replyDeleteBtn').click(function(){
-				alert("삭제 버튼 눌림");
-				replyService.remove($(this).attr("data_reply_id"), function(count) {
-
-					console.log(count);
-
-					if(count==="success"){
-						alert("REMOVED");
-					}
-				}, function(err){
+			
+			function replyDeleteBtn(){
+				
+				var replyId = $(this).attr("data-delete");
+				
+				replyService.remove(
+					replyId, 
+					function(result) {
+						if(result==="success"){
+							alert("REMOVED");
+							showReplyList();
+						}
+					}, 
+					function(err){
 					alert('ERROR...');
 				});
-			})
+			}
 			
 		});
 		
