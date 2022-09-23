@@ -21,7 +21,7 @@ table {
 <title>게시글(${board.id })</title>
 </head>
 <body>
-	<h1>게시글(${board.id }) ${pageNum }</h1>
+	<h1>게시글(${board.id })</h1>
 	<table width="930px">
 		<tr>
 			<td align="left">
@@ -58,30 +58,53 @@ table {
 	<br />
 
 	<div style="width: 930px; margin: auto;">
-		<div
-			style="height: 30px; background-color: silver; vertical-align: middle;">
-			<strong>Reply</strong>
+		<br>
+		
+		<div style="border-radius: 7px; border: 2px solid; border-color: silver;  ">
+			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
+			<div>
+				<label>내용</label><br>
+				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:40px" id="reply_content" name="reply_content" value="">	
+			</div>
+			<br>
+			<div>
+				<label>작성자</label><br>
+				<input type="text" style="border-color: silver; border-radius: 15px;width:98%; height:40px" id="reply_writer" name="reply_writer" value="">
+				<br>
+				<br>
+				<div style="float:right; padding:10px;">
+					<button id="registReplyBtn" style ="height:25px; border-radius: 20px;"">
+						Register
+					</button>
+				</div>
+				<br>
+				<br>
+			</div>
 		</div>
+		<br>
+		<br>
 		<div>
 			<ul class="chat">
 			</ul>
 		</div>
 	</div>
 
+
+
 	<!-- 댓글 -->
 	<script type="text/javascript" src="/resources/js/reply.js"></script>
-
+	
+	
+	
 	<script>
 		$(document).ready(function() {
 
 			var boardId = '<c:out value="${board.id}"/>';
 			var replyUL = $(".chat"); //class 걸어놓는것
 			
-			showList(1);
+			showReplyList();
 
-			function showList(page) {
-
-			console.log("show list " + page);
+			function showReplyList() {
 
 			replyService.getList(
 				{
@@ -97,42 +120,86 @@ table {
 					}
 					
 					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str += "<li style='border-top-color: silver; border-top: 2px solid;'>"
-					    str += "<div><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>"
-						str += "작성일:     " + list[i].reply_datetime + "</small></div><p>" + list[i].reply_content +"</p></li>";
+						str += "<li style='border-color: red; border: 1px solid;border-radius: 4px;'>";
+					    str += "<div><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
+						str += list[i].reply_datetime + "</small></div><p>" + list[i].reply_content +"</p>";
+						str += "<button id='replyDeleteBtn' data_reply_id='"+ list[i].reply_id + "'>삭제</button></li><br>";
 					}
+					
 
 					replyUL.html(str);
 
 				 });//end function
 			}//end showList
+			
+			$('#registReplyBtn').click(function(){
+				var registReplyWriter = document.getElementById('reply_writer').value.trim();
+				var registReplyContent = document.getElementById('reply_content').value.trim();
+				
+				if(registReplyWriter == "" || registReplyContent == ""){
+					alert("항목을 채워주세요");
+					
+				}
+				else{
+					var reply = {
+							board_id : boardId,
+							reply_writer : registReplyWriter,
+							reply_content : registReplyContent
+					};
+					
+					replyService.add(
+							reply,
+							function(result){
+								alert(result);
+								showReplyList();
+							}
+					);
+					
+				}
+			})
+			
+			$('#replyDeleteBtn').click(function(){
+				alert("삭제 버튼 눌림");
+				replyService.remove($(this).attr("data_reply_id"), function(count) {
+
+					console.log(count);
+
+					if(count==="success"){
+						alert("REMOVED");
+					}
+				}, function(err){
+					alert('ERROR...');
+				});
+			})
+			
 		});
+		
 	</script>
 
 	<!-- ajax 테스트 -->
-	<script type="text/javascript">
+	<script>
 		// 	console.log("===========");
 		// 	console.log("JS TEST");
 
-		// 	var boardId = '<c:out value="${board.id}"/>';
+// 		 	var boardId = '<c:out value="${board.id}"/>';
 
-		// 	//add
-		// // 	replyService.add(
-		// // 			{
-		// // 				board_id:boardId, 
-		// // 				reply_content:"JS Test5", 
-		// // 				reply_writer:"tester5"
-		// // 			},
+// // 			add
+// 			replyService.add(
+// 					{
+// 						board_id:boardId, 
+// 						reply_content:"JS Test6", 
+// 						reply_writer:"tester6"
+// 					},
 
-		// // 			function(result){
-		// // 				alert("RESULT: " + result);	
-		// // 			}
-		// // 	);
+// 					function(result){
+// 						alert("RESULT: " + result);	
+// 					}
+// 			);
 
 		// 	//list
 		// // 	replyService.getList(
 		// // 		{board_id:boardId}, function(list){
-		// // 			//for(var i=0, len=list.length||0; i<len; i++)
+		// 			//for(var i=0, len=list.length||0; i<len; i++)
 		// // 			for(var i=0, len=list.length; i<len; i++){
 		// // 				console.log(list[i]);
 		// // 			}
