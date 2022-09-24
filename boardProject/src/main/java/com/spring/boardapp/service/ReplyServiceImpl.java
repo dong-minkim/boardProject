@@ -1,12 +1,15 @@
 package com.spring.boardapp.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.boardapp.dao.BoardDao;
 import com.spring.boardapp.dao.ReplyDao;
 import com.spring.boardapp.domain.Reply;
 
@@ -15,11 +18,26 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Resource(name = "ReplyDao")
 	private ReplyDao replyDao;
+	
+	@Resource(name = "boardDao")
+	private BoardDao boardDao;
 
+	@Transactional
 	@Override
 	public int insertReply(Reply reply) {
 		// TODO Auto-generated method stub
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", reply.getBoard_id());
+		param.put("amount", "1");
+		boardDao.updateReplyCnt(param);
+		
 		return replyDao.insertReply(reply);
+	}
+	
+	@Override
+	public Reply getReply(String reply_id) {
+		// TODO Auto-generated method stub
+		return replyDao.getReply(reply_id);
 	}
 
 	@Override
@@ -36,13 +54,23 @@ public class ReplyServiceImpl implements ReplyService {
 		else
 			return false;
 	}
-
+	
 	@Override
 	public boolean deleteReply(String reply_id) {
 		// TODO Auto-generated method stub
-		if (replyDao.deleteReply(reply_id) == 1)
+		
+		Reply reply = replyDao.getReply(reply_id);
+		
+		if(replyDao.deleteReply(reply_id)>0) {
+			System.out.println("여기 " + reply_id);
+			
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id", reply.getBoard_id());
+			param.put("amount", "-1");
+			boardDao.updateReplyCnt(param);
+			
 			return true;
-		else
-			return false;
+		}
+		else return false;
 	}
 }

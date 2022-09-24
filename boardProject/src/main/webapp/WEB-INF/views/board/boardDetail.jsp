@@ -63,28 +63,30 @@ table {
 		<div style="border-radius: 7px; border: 2px solid; border-color: silver;  ">
 			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
 			<div>
-				<label>내용</label><br>
-				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:40px" id="reply_content" name="reply_content" value="">	
+				<label style="padding:15px">작성자</label><br>
+				<input type="text" style="border-color: silver; border-radius: 15px;width:98%; height:40px; margin:10px; padding:10px" id="reply_writer" name="reply_writer" value="">
 			</div>
 			<br>
+			<br>
 			<div>
-				<label>작성자</label><br>
-				<input type="text" style="border-color: silver; border-radius: 15px;width:98%; height:40px" id="reply_writer" name="reply_writer" value="">
-				<br>
-				<br>
-				<div style="float:right; padding:10px;">
-					<button id="registReplyBtn" style ="height:25px; border-radius: 20px;"">
-						Register
-					</button>
-				</div>
-				<br>
-				<br>
+				<label style="padding:15px">내용</label><br>
+				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content" value=""></textarea>
+<!-- 				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px;" id="reply_content" name="reply_content" value="">	 -->
 			</div>
+				<br>
+				<br>
+			<div style="float:right; padding:10px;">
+			<button id="registReplyBtn" style ="height:25px; border-radius: 20px;"">
+				Register
+			</button>
+			</div>
+				<br>
+				<br>
 		</div>
 		<br>
 		<br>
 		<div>
-			<ul class="chat">
+			<ul class="chat" style="padding-left: 0px;">
 			</ul>
 		</div>
 	</div>
@@ -120,10 +122,10 @@ table {
 					}
 					
 					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str += "<li style='border-color: red; border: 1px solid;border-radius: 4px;'>";
-					    str += "<div><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
-						str += list[i].reply_datetime + "</small></div><p>" + list[i].reply_content +"</p>";
-						str += "<input type=button class='replyDeleteBtn'  data-delete='"+ list[i].reply_id + "' value='삭제'></button></li><br>";
+						str += "<li style='list-style:none; border-color: red; border: 1px solid;border-radius: 4px;'>";
+					    str += "<div style='padding:10px'><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
+						str += list[i].reply_datetime + "</small></div><p style='padding:10px'>" + list[i].reply_content +"</p>";
+						str += "<div><input type=button class='replyDeleteBtn'  data-delete='"+ list[i].reply_id + "' value='삭제'style='float:right; width:60px; height:30px; border-radius: 20px;'><br><br></div></li><br>";
 					}
 					
 
@@ -153,6 +155,7 @@ table {
 							function(result){
 								alert(result);
 								showReplyList();
+								$('input[name=reply_writer]').attr('value',"");
 							}
 					);
 					

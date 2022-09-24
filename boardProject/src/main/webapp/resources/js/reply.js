@@ -81,6 +81,21 @@
  		});
  	}
  	
+ 	function get(reply_id, callback, error) {
+
+		$.get("/reply/get/" + reply_id + ".json", function(result) {
+
+			if (callback) {
+				callback(result);
+			}
+
+		}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	}
+ 	
  	function displayTime(timeValue) {
 
 		var today = new Date();

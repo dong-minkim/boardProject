@@ -39,7 +39,7 @@
 			<td><textarea style="border: none;" rows="40" cols="120" name="content"></textarea>
 		</tr>
 	</table>
-	<table width="1000px">
+	<table width="930px">
 		<tr>
 			<td align="right"><input type="button" value="목록" onclick="location.href='/board/list'">
 		<input type="reset" value="초기화" />

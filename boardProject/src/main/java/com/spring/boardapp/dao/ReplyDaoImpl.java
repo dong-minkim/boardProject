@@ -21,11 +21,18 @@ public class ReplyDaoImpl implements ReplyDao {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("insertReply", reply);
 	}
+	
+	@Override
+	public Reply getReply(String reply_id) {
+		System.out.println("dao: " + reply_id);
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("selectReply", reply_id);
+	}
 
 	@Override
 	public List<Reply> getReplyList(String board_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("selectReply", board_id);
+		return sqlSession.selectList("selectReplyList", board_id);
 	}
 
 	@Override

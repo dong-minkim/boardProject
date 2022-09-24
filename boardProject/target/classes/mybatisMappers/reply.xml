@@ -13,7 +13,17 @@
 		#{reply_writer}
 		)
 	</insert>
-	<select id="selectReply" parameterType="String" resultType="Reply">
+	<select id="selectReply" parameterType="String" resultType="com.spring.boardapp.domain.Reply">
+		SELECT reply_id,
+			   board_id,
+			   reply_content,
+			   reply_writer,
+			   reply_datetime,
+			   reply_updatetime
+		FROM board_reply
+		WHERE reply_id = #{reply_id}
+	</select>
+	<select id="selectReplyList" parameterType="String" resultType="Reply">
 		SELECT *
 		FROM board_reply
 		WHERE board_id = #{board_id}

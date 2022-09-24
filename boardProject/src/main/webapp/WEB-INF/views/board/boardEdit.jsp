@@ -45,7 +45,9 @@ table {
 				<td><textarea style="border: none;" rows="40" cols="120"
 						name="content">${board.content }</textarea>
 			</tr>
-			<tr style="border: none">
+		</table>
+		<table width="1000px">
+			<tr>
 				<td colspan="2" align="right">
 					<div>
 						<input type="button" value="목록" onclick="location.href='/board/list?pageNum=${pageNum }&pageAmount=${pageAmount}'">

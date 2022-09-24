@@ -8,6 +8,7 @@ public class Board {
 	private String views;
 	private String regist_datetime;
 	private String modify_datetime;
+	private int reply_cnt;
 	
 	
 	public String getId() {
@@ -51,5 +52,11 @@ public class Board {
 	}
 	public void setModify_datetime(String modify_datetime) {
 		this.modify_datetime = modify_datetime;
+	}
+	public int getReply_cnt() {
+		return reply_cnt;
+	}
+	public void setReply_cnt(int reply_cnt) {
+		this.reply_cnt = reply_cnt;
 	}
 }

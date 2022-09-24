@@ -8,6 +8,9 @@ import com.spring.boardapp.domain.Reply;
 public interface ReplyService {
 	// 댓글 달기
 	int insertReply(Reply reply);
+	
+	// 댓글 하나
+	Reply getReply(String reply_id);
 
 	// 댓글 목록 출력
 	List<Reply> getReplyList(String board_id);

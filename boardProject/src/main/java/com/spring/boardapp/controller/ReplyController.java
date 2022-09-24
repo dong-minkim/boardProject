@@ -33,10 +33,18 @@ public class ReplyController {
 																	 //@RequestBody: 요청을 해당 타입으로 변환 여기선 (JSON->Reply)
 		
 		int insertResult = replyService.insertReply(reply);
-		System.out.println("등록호출됨");
 		
 		return insertResult==1 ? new ResponseEntity<String>("success",HttpStatus.OK) :
 							new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@GetMapping(value = "/get/{reply_id}", 
+			produces = { MediaType.APPLICATION_XML_VALUE, 
+					     MediaType.APPLICATION_JSON_UTF8_VALUE })
+	public ResponseEntity<Reply> getReply(@PathVariable("reply_id") String reply_id) {
+
+
+		return new ResponseEntity<Reply>(replyService.getReply(reply_id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{board_id}",

@@ -23,7 +23,8 @@
 		writer,
 		views,
 		date_format(regist_datetime, '%Y-%m-%d %H:%i:%s') regist_datetime,
-		date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime
+		date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime,
+		reply_cnt
 		FROM board
 		WHERE id = #{id}
 	</select>
@@ -45,7 +46,8 @@
 		writer,
 		views,
 		date_format(regist_datetime, '%Y-%m-%d %H:%i:%s') regist_datetime,
-		date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime
+		date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime,
+		reply_cnt
 		FROM board
 		ORDER BY id
 		LIMIT 10 OFFSET 0
@@ -57,7 +59,8 @@
   				   writer,
   				   views,
   				   date_format(regist_datetime, '%Y-%m-%d %H:%i:%s') regist_datetime,
-               	   date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime
+               	   date_format(modify_datetime, '%Y-%m-%d %H:%i:%s') modify_datetime,
+               	   reply_cnt
             FROM (
             		SELECT *
             		FROM board
@@ -82,6 +85,11 @@
 	<update id="updateBoardViews" parameterType="String">
 		UPDATE board
 		SET views = views + 1
+		WHERE id = #{id}
+	</update>
+	<update id="updateReplyCnt" parameterType="java.util.HashMap">
+		UPDATE board
+		SET reply_cnt = reply_cnt + #{amount}
 		WHERE id = #{id}
 	</update>
 	

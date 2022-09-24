@@ -65,5 +65,11 @@ public class BoardDaoImpl implements BoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("updateBoardViews", id);
 	}
+	
+	@Override
+	public int updateReplyCnt(Map<String, Object> paramMap) {
+
+		return sqlSession.update("updateReplyCnt", paramMap);
+	}
 
 }
