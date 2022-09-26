@@ -24,7 +24,6 @@ public class ReplyDaoImpl implements ReplyDao {
 	
 	@Override
 	public Reply getReply(String reply_id) {
-		System.out.println("dao: " + reply_id);
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("selectReply", reply_id);
 	}

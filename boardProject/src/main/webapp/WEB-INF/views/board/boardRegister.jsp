@@ -4,6 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- jquery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+
 <style>
 	h2{
 		text-align: center;
@@ -47,5 +52,171 @@
 		</tr>
 	</table>
 	</form>
+	
+	<div style="width: 930px; margin:auto">
+    <div>File Attach</div>
+    	<div>
+        	<div class="uploadDiv">
+            	<input type="file" name='uploadFile' multiple>
+        	</div>
+        
+        	<div class='uploadResult'> 
+          	<ul>
+          
+          	</ul>
+    	</div>
+	</div>
+	</div>
+	
+	<script>
+		$(document).ready(function(e){
+			
+			var formObj = $("form[role='form']");
+			
+			$("input[type='submit']").on("click", function(e){
+				
+				e.preventDefault();
+				
+				console.log("submit clicked");
+				
+				var str = "";
+				
+				$(".uploadResult ul li").each(function(i, obj){
+				      
+					var jobj = $(obj);
+				      
+				    console.dir(jobj);
+				    console.log("-------------------------");
+				    console.log(jobj.data("filename"));
+				      
+				    //게시글 등록은 <form> 태그를 통해서 이루어진다.
+				    //이미 업로드된 정보는 별도의 <input type='hidden'> 태그를 생성해서 처리한다.
+				    //Board에서 이에 대한 List 이름이 attachList이므로 name을 맞춰준다.
+				    str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+				      
+				});
+				
+				formObj.append(str).submit();
+			});
+			
+			
+			
+			// 확장자, 크기 제한
+			var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+			var maxSize = 10485760; //10MB
+			  
+			function checkExtension(fileName, fileSize){
+				if(fileSize > maxSize){
+					alert("파일 사이즈 초과");
+					return false;
+				}
+			    
+				if(regex.test(fileName)){
+					alert("해당 종류의 확장자는 업로드할 수 없습니다.");
+			      	return false;
+			    }
+			    return true;
+			}
+			
+			// 업로드된 파일 보여주기
+			function showUploadResult(uploadResultArr){
+				if(!uploadResultArr || uploadResultArr.length == 0){ return; }
+				
+				var uploadUL = $(".uploadResult ul");
+				
+				var str = "";
+				
+				$(uploadResultArr).each(function(i, obj){
+					if(obj.image){ //이미지 파일인 경우
+						
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+						str += "<li data-path='"+obj.uploadPath+"'";
+						str +=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+						str += "<div><span> "+ obj.fileName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' "
+						str += "data-type='image'>x<i class='fa fa-times'></i></button><br>";
+						str += "<img src='/display?fileName="+fileCallPath+"'>";
+						str += "</div></li>";
+					}else{
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					      
+						str += "<li "
+						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' >";
+						str += "<div><span> "+ obj.fileName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += ">x<i class='fa fa-times'></i></button><br>";
+						str += "<img src='/resources/img/attach.png'></a>";
+						str += "</div></li>";
+					}
+				});
+				
+				uploadUL.append(str);
+			});
+		
+		  	$(".uploadResult").on("click", "button", function(e){
+			    
+				console.log("delete file");
+			      
+			    var targetFile = $(this).data("file");
+			    var type = $(this).data("type");
+			    var targetLi = $(this).closest("li");
+			    
+			    $.ajax({
+			    	url: '/deleteFile',
+			      	data: {fileName: targetFile, type:type},
+			      	dataType:'text',
+			      	type: 'POST',
+			        success: function(result){
+			        	alert(result);
+			        	targetLi.remove();
+			        }
+			    }); //$.ajax
+			});
+		
+			
+			//jquery change() 메소드
+			$("input[type='file']").change(function(e){
+
+				//파일 업로드는 FormData 객체를 이용한다.
+				//FormData는 쉽게 말해서 가상의 <form> 태그와 같다.
+				//Ajax 이용하여 파일 업로드 할 때 필요한 파라미터를 여기서 담아 전송한다.
+			    var formData = new FormData();
+			    
+			    var inputFile = $("input[name='uploadFile']");
+			    
+			    var files = inputFile[0].files;
+			    
+			    for(var i = 0; i < files.length; i++){
+			    	if(!checkExtension(files[i].name, files[i].size) ){
+			        	return false;
+			      	}
+			      	formData.append("uploadFile", files[i]);
+			    }
+			    
+			    $.ajax({
+			    	url: '/uploadAjaxAction',
+			      	processData: false, 
+			      	contentType: false,
+			      	data:formData,
+			      	type: 'POST',
+			      	dataType:'json',
+			        success: function(result){
+			        	console.log(result); 
+					  	showUploadResult(result); //업로드 결과 처리 함수 
+
+			      	}
+				}); //$.ajax
+			
+			
+		});
+		 
+	</script>
+	
+	
+	
 </body>
 </html>

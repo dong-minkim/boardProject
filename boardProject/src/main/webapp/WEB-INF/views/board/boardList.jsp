@@ -39,7 +39,7 @@
 			<tr>
 				<td>${boardList.id }</td>
 				<td><a href="/board/detail/${boardList.id }?searchType=${pageMaker.searchType }&searchWord=${pageMaker.searchWord }&pageNum=${pageMaker.pageNum}&pageAmount=${pageMaker.pageAmount}">
-					${boardList.title }<b>[ <c:out value="${boardList.reply_cnt }" /> ]</b></a></td>
+					${boardList.title }<b> [<c:out value="${boardList.reply_cnt }" />]</b></a></td>
 				<td>${boardList.writer }</td>
 				<td>${boardList.views }</td>
 				<td>${boardList.regist_datetime }</td>

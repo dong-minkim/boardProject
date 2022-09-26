@@ -1,5 +1,7 @@
 package com.spring.boardapp.domain;
 
+import java.util.List;
+
 public class Board {
 	private String id;
 	private String title;
@@ -9,6 +11,8 @@ public class Board {
 	private String regist_datetime;
 	private String modify_datetime;
 	private int reply_cnt;
+	
+	private List<BoardAttach> attachList;
 	
 	
 	public String getId() {
@@ -58,5 +62,12 @@ public class Board {
 	}
 	public void setReply_cnt(int reply_cnt) {
 		this.reply_cnt = reply_cnt;
+	}
+	
+	public List<BoardAttach> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<BoardAttach> attachList) {
+		this.attachList = attachList;
 	}
 }
