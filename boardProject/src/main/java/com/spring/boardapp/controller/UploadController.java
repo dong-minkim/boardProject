@@ -91,30 +91,6 @@ public class UploadController {
 		return false;
 	}
 
-//	@PostMapping(value = "/uploadAjaxAction")
-//	public void uploadAjaxPost(MultipartFile[] uploadFile) {
-//
-//
-//		String uploadFolder = "D:\\upload";
-//
-//		for (MultipartFile multipartFile : uploadFile) {
-//
-//			String uploadFileName = multipartFile.getOriginalFilename();
-//
-//			// IE의 경우 전체 파일 경로가 전송되므로, 마지막 \를 기준으로 잘라낸 문자열이 실제 파일 이름이 된다.
-//			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-//
-//			File saveFile = new File(uploadFolder, uploadFileName);
-//
-//			try {
-//
-//				multipartFile.transferTo(saveFile);
-//			} catch (Exception e) {
-//			} // end catch
-//
-//		} // end for
-//
-//	}
 	
 	@PostMapping(value = "/uploadAjaxAction", 
 				produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -135,13 +111,13 @@ public class UploadController {
 
 		for (MultipartFile multipartFile : uploadFile) {
 
-			AttachFile attachDTO = new AttachFile();
+			AttachFile attachFile = new AttachFile();
 
 			String uploadFileName = multipartFile.getOriginalFilename();
 
 			// IE의 경우 전체 파일 경로가 전송되므로, 마지막 \를 기준으로 잘라낸 문자열이 실제 파일 이름이 된다.
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			attachDTO.setFileName(uploadFileName);
+			attachFile.setFileName(uploadFileName);
 
 			UUID uuid = UUID.randomUUID();
 
@@ -151,13 +127,13 @@ public class UploadController {
 				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
 
-				attachDTO.setUuid(uuid.toString());
-				attachDTO.setUploadPath(uploadFolderPath);
+				attachFile.setUuid(uuid.toString());
+				attachFile.setUploadPath(uploadFolderPath);
 
 				// check image type file
 				if (checkImageType(saveFile)) {
 
-					attachDTO.setImage(true);
+					attachFile.setImage(true);
 
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 
@@ -167,7 +143,7 @@ public class UploadController {
 				}
 
 				// add to List
-				list.add(attachDTO);
+				list.add(attachFile);
 
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -64,13 +64,13 @@ table {
 			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
 			<div>
 				<label style="padding:15px">작성자</label><br>
-				<input type="text" style="border-color: silver; border-radius: 15px;width:98%; height:40px; margin:10px; padding:10px" id="reply_writer" name="reply_writer" value="">
+				<input type="text" style="border-color: silver; border-radius: 15px;width:95%; height:40px; margin:10px; padding:10px" id="reply_writer" name="reply_writer" value="">
 			</div>
 			<br>
 			<br>
 			<div>
 				<label style="padding:15px">내용</label><br>
-				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content" value=""></textarea>
+				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:95%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content" value=""></textarea>
 <!-- 				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px;" id="reply_content" name="reply_content" value="">	 -->
 			</div>
 				<br>

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.spring.boardapp.dao.BoardAttachDao;
 import com.spring.boardapp.dao.BoardDao;
 import com.spring.boardapp.domain.Board;
 import com.spring.boardapp.domain.Reply;
@@ -17,6 +18,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Resource(name = "boardDao")
 	private BoardDao boardDao;
+	
+	@Resource(name = "BoardAttachDao")
+	private BoardAttachDao boardAttachDao;
 
 	@Override
 	public int insertBoard(Map<String, Object> paramMap) {
@@ -25,6 +29,8 @@ public class BoardServiceImpl implements BoardService {
 			return 0;
 		} else {
 			int result = boardDao.insertBoard(paramMap);
+			//if(paramMap.get("attachList") == null || paramMap.get("attachList").size() <= 0)
+			
 			return result;
 		}
 	}

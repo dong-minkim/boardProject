@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +12,53 @@
 </script>
 
 <style>
-	h2{
-		text-align: center;
-	}
-	table{
-		margin: auto;
-		
-	}
+h2 {
+	text-align: center;
+}
+
+table {
+	margin: auto;
+}
+
+.uploadResult {
+	width: 100%;
+	background-color: gray;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadResult ul li img {
+	width: 100px;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 </style>
 <title>게시글 작성</title>
 </head>
@@ -47,8 +89,8 @@
 	<table width="930px">
 		<tr>
 			<td align="right"><input type="button" value="목록" onclick="location.href='/board/list'">
-		<input type="reset" value="초기화" />
-		<input type="submit" value="등록" /></td>
+		<button type="reset">초기화</button>
+		<button type="submit">등록</button></td>
 		</tr>
 	</table>
 	</form>
@@ -64,20 +106,22 @@
           	<ul>
           
           	</ul>
+    		</div>
     	</div>
-	</div>
 	</div>
 	
 	<script>
 		$(document).ready(function(e){
 			
-			var formObj = $("form[role='form']");
+			var formObj = $("form");
 			
-			$("input[type='submit']").on("click", function(e){
+			$("button[type='submit']").on("click", function(e){
 				
 				e.preventDefault();
 				
 				console.log("submit clicked");
+				
+				formObj.submit();
 				
 				var str = "";
 				
@@ -92,12 +136,14 @@
 				    //게시글 등록은 <form> 태그를 통해서 이루어진다.
 				    //이미 업로드된 정보는 별도의 <input type='hidden'> 태그를 생성해서 처리한다.
 				    //Board에서 이에 대한 List 이름이 attachList이므로 name을 맞춰준다.
-				    str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
-				    str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
-				    str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
-				    str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+				    str += "<input type='hidden' id ='attachList["+i+"].fileName' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				    str += "<input type='hidden' id ='attachList["+i+"].uuid' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				    str += "<input type='hidden' id ='attachList["+i+"].uploadPath' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				    str += "<input type='hidden' id ='attachList["+i+"].fileType' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
 				      
 				});
+				
+				console.log(str);
 				
 				formObj.append(str).submit();
 			});
@@ -121,63 +167,7 @@
 			    return true;
 			}
 			
-			// 업로드된 파일 보여주기
-			function showUploadResult(uploadResultArr){
-				if(!uploadResultArr || uploadResultArr.length == 0){ return; }
-				
-				var uploadUL = $(".uploadResult ul");
-				
-				var str = "";
-				
-				$(uploadResultArr).each(function(i, obj){
-					if(obj.image){ //이미지 파일인 경우
 						
-						var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
-						str += "<li data-path='"+obj.uploadPath+"'";
-						str +=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
-						str += "<div><span> "+ obj.fileName+"</span>";
-						str += "<button type='button' data-file=\'"+fileCallPath+"\' "
-						str += "data-type='image'>x<i class='fa fa-times'></i></button><br>";
-						str += "<img src='/display?fileName="+fileCallPath+"'>";
-						str += "</div></li>";
-					}else{
-						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
-					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-					      
-						str += "<li "
-						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' >";
-						str += "<div><span> "+ obj.fileName+"</span>";
-						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
-						str += ">x<i class='fa fa-times'></i></button><br>";
-						str += "<img src='/resources/img/attach.png'></a>";
-						str += "</div></li>";
-					}
-				});
-				
-				uploadUL.append(str);
-			});
-		
-		  	$(".uploadResult").on("click", "button", function(e){
-			    
-				console.log("delete file");
-			      
-			    var targetFile = $(this).data("file");
-			    var type = $(this).data("type");
-			    var targetLi = $(this).closest("li");
-			    
-			    $.ajax({
-			    	url: '/deleteFile',
-			      	data: {fileName: targetFile, type:type},
-			      	dataType:'text',
-			      	type: 'POST',
-			        success: function(result){
-			        	alert(result);
-			        	targetLi.remove();
-			        }
-			    }); //$.ajax
-			});
-		
-			
 			//jquery change() 메소드
 			$("input[type='file']").change(function(e){
 
@@ -210,13 +200,67 @@
 
 			      	}
 				}); //$.ajax
+			});
 			
-			
+			// 업로드된 파일 보여주기
+			function showUploadResult(uploadResultArr){
+				if(!uploadResultArr || uploadResultArr.length == 0){ return; }
+				
+				var uploadUL = $(".uploadResult ul");
+				
+				var str = "";
+				
+				$(uploadResultArr).each(function(i, obj){
+					if(obj.image){ //이미지 파일인 경우
+						
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
+						str += "<li data-path='"+obj.uploadPath+"'";
+						str +=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'>"
+						str += "<div><span> "+ obj.fileName+"</span>";
+						str += "<button type='button' style='border-radius:20px' data-file=\'"+fileCallPath+"\' "
+						str += "data-type='image'>x<i class='fa fa-times'></i></button><br>";
+						str += "<img src='/display?fileName="+fileCallPath+"'>";
+						str += "</div></li>";
+					}else{
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					      
+						str += "<li "
+						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' >";
+						str += "<div><span> "+ obj.fileName+"</span>";
+						str += "<button type='button' style='border-radius:20px' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += ">x<i class='fa fa-times'></i></button><br>";
+						str += "<img src='/resources/img/attach.png'></a>";
+						str += "</div></li>";
+					}
+				});
+				
+				uploadUL.append(str);
+			}
+		
+		  	$(".uploadResult").on("click", "button", function(e){
+			    
+				console.log("delete file");
+			      
+			    var targetFile = $(this).data("file");
+			    var type = $(this).data("type");
+			    var targetLi = $(this).closest("li");
+			    
+			    $.ajax({
+			    	url: '/deleteFile',
+			      	data: {fileName: targetFile, type:type},
+			      	dataType:'text',
+			      	type: 'POST',
+			        success: function(result){
+			        	alert(result);
+			        	targetLi.remove();
+			        }
+			    }); //$.ajax
+			});
+		
+
 		});
 		 
-	</script>
-	
-	
-	
+</script>
 </body>
 </html>
