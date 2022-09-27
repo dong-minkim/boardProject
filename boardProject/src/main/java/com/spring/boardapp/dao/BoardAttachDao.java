@@ -9,5 +9,5 @@ public interface BoardAttachDao {
 	
 	public void delete(String uuid);
 	
-	public List<BoardAttachDao> findBoardAttach(String board_id);
+	public List<BoardAttach> findBoardAttach(String board_id);
 }

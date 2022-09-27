@@ -6,16 +6,22 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.BoardAttach;
 import com.spring.boardapp.domain.paging.Paging;
 import com.spring.boardapp.service.BoardService;
 
@@ -103,6 +109,14 @@ public class BoardController {
 		Paging paging = new Paging(Integer.parseInt(pageNum), Integer.parseInt(pageAmount), searchType, searchWord, total);
 		model.addAttribute("pageMaker", paging);
 		return "board/boardList";
+	}
+	
+	@GetMapping(value = "/getAttachList", 
+				produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttach>> getAttachList(String id) {
+		System.out.println(id);
+		return new ResponseEntity<List<BoardAttach>>(boardService.getAttachList(id), HttpStatus.OK);
 	}
 
 }

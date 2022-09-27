@@ -17,7 +17,7 @@
 	<delete id="delete">
 		DELETE FROM attach WHERE uuid = #{uuid}
 	</delete>
-	<select id="findBoardAttach">
+	<select id="findBoardAttach" parameterType="String" resultType="com.spring.boardapp.domain.BoardAttach">
 		SELECT *
 		FROM attach
 		WHERE board_id = #{board_id}

@@ -25,7 +25,7 @@ public class BoardAttachDaoImpl implements BoardAttachDao {
 		
 	}
 	@Override
-	public List<BoardAttachDao> findBoardAttach(String board_id) {
+	public List<BoardAttach> findBoardAttach(String board_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("findBoardAttach", board_id);
 	}

@@ -33,16 +33,13 @@ public class BoardServiceImpl implements BoardService {
 			
 			int result = boardDao.insertBoard(paramMap);
 			String id = String.valueOf(paramMap.get("id"));
-			System.out.println(id);
-			System.out.println(paramMap);
 			
 			for(int i=0;i<attachSize;i++) {
 				String tmp = "attachList["+i+"].";
-				System.out.println(tmp);
 				String uuid = String.valueOf(paramMap.get(tmp+"uuid"));
 				String uploadPath = String.valueOf(paramMap.get(tmp+"uploadPath"));
 				String fileName = String.valueOf(paramMap.get(tmp+"fileName"));
-				boolean fileType = Boolean.parseBoolean(String.valueOf(paramMap.get(tmp+"fileType")));
+				String fileType = String.valueOf(paramMap.get(tmp+"fileType"));
 				
 				BoardAttach attach = new BoardAttach(uuid,uploadPath,fileName,fileType,id);
 				boardAttachDao.insert(attach);
@@ -88,5 +85,11 @@ public class BoardServiceImpl implements BoardService {
 	public int getBoardTotalCnt(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
 		return boardDao.getBoardTotalCnt(paramMap);
+	}
+	
+	@Override
+	public List<BoardAttach> getAttachList(String id) {
+		// TODO Auto-generated method stub
+		return boardAttachDao.findBoardAttach(id);
 	}
 }

@@ -17,6 +17,62 @@ h1, h2 {
 table {
 	margin: auto;
 }
+<style>
+.uploadResult {
+  width:100%;
+  background-color: green;
+}
+.uploadResult ul{
+  display:flex;
+  flex-flow: row;
+  background-color: green;
+  justify-content: center;
+  align-items: center;
+}
+.uploadResult ul li {
+  list-style: none;
+  border:3px solid white;
+  border-radius:10px;
+  padding: 10px;
+  margin : 5px;
+  align-content: center;
+  text-align: center;
+}
+.uploadResult ul li img{
+  width: 100px;
+}
+.uploadResult ul li span {
+  border:3px solid white;
+  border-radius:10px;
+  padding: 10px;
+  
+  margin: 5px;
+  font-weight: bold;
+  color:white;
+}
+.bigPictureWrapper {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top:0%;
+  width:100%;
+  height:100%;
+  background-color: gray; 
+  z-index: 100;
+  background:rgba(255,255,255,0.5);
+}
+.bigPicture {
+  position: relative;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bigPicture img {
+  width:600px;
+}
+
 </style>
 <title>게시글(${board.id })</title>
 </head>
@@ -53,10 +109,27 @@ table {
 		</tr>
 	</table>
 
-
+	<br />
+	<!-- Attachment -->
+	<div class="bigPictureWrapper">
+		<div class="bigPicture">
+		</div>
+	</div>
+	<div style="border-radius: 7px; border: 2px solid; border-color: silver; width: 930px; margin: auto;  ">
+		<div style="text-align: center;"><strong> Attachment </strong></div><br>
+		<div>
+			<div class="uploadResult">
+				<ul>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 	<br />
 	<br />
-
+	<!-- Reply -->
 	<div style="width: 930px; margin: auto;">
 		<br>
 		
@@ -95,9 +168,6 @@ table {
 
 	<!-- 댓글 -->
 	<script type="text/javascript" src="/resources/js/reply.js"></script>
-	
-	
-	
 	<script>
 		$(document).ready(function() {
 
@@ -233,6 +303,79 @@ table {
 		// // 	}, function(err){
 		// // 		alert('ERROR...');
 		// // 	});
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+		
+		//즉시 실행 함수
+		(function(){
+			
+			var boardId = '<c:out value="${board.id}"/>';
+			
+			$.getJSON("/board/getAttachList",
+				{id:boardId},
+				function(arr){
+					console.log(arr);
+						  
+					var str="";
+					$(arr).each(function(i, attach){
+						//image type
+						if(attach.fileType=='1'){
+							var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+						    console.log(fileCallPath);
+							str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' >";
+							str += "<div><span> "+ attach.fileName+"</span><br/><br/><img src='/display?fileName="+fileCallPath+"'>";
+							str += "</div></li>";
+						}else{ 
+						 	str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' >";
+							str += "<div><span> "+ attach.fileName+"</span><br/><br/>";
+							str += "<img src='/resources/img/attach.png'></a>";
+							str += "</div></li>";
+						}
+					});
+					
+					$(".uploadResult ul").html(str);		
+				}
+			);
+			
+		})();
+		
+		$(".uploadResult").on("click","li", function(e){
+		      
+			console.log("view image");
+			    
+			var liObj = $(this);
+			    
+			var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
+			    
+			if(liObj.data("type")=="1"){
+				showImage(path.replace(new RegExp(/\\/g),"/"));
+			}else {
+				//download 
+				self.location ="/download?fileName="+path
+			}
+			    
+			    
+		});
+			  
+		function showImage(fileCallPath){
+				    
+			alert(fileCallPath);
+			    
+			$(".bigPictureWrapper").css("display","flex").show();
+			    
+			$(".bigPicture").html("<img src='/display?fileName="+fileCallPath+"' >")
+			    			.animate({width:'100%', height: '100%'}, 0);
+			    
+		}
+
+		$(".bigPictureWrapper").on("click", function(e){
+			$(".bigPicture").animate({width:'0%', height: '0%'}, 0);
+			setTimeout(function(){ $('.bigPictureWrapper').hide();}, 1000);
+		});
+		
+	});
 	</script>
 
 </body>

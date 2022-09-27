@@ -223,7 +223,7 @@ public class UploadController {
 		File file;
 
 		try {
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("D:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
 
 			file.delete();
 			

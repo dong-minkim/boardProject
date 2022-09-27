@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.BoardAttach;
 import com.spring.boardapp.domain.Reply;
 
 public interface BoardService {
@@ -28,5 +29,8 @@ public interface BoardService {
 
 	// 게시글 전체 개수
 	int getBoardTotalCnt(Map<String, Object> paramMap);
+	
+	// 첨부파일 리스트 가져오기
+	List<BoardAttach> getAttachList(String id);
 
 }
