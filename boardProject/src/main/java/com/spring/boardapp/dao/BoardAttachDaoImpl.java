@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.boardapp.domain.BoardAttach;
+
 @Repository("BoardAttachDao")
 public class BoardAttachDaoImpl implements BoardAttachDao {
 	
@@ -13,7 +15,7 @@ public class BoardAttachDaoImpl implements BoardAttachDao {
 	private SqlSession sqlSession;
 	
 	@Override
-	public void insert(BoardAttachDao boardAttach) {
+	public void insert(BoardAttach boardAttach) {
 		// TODO Auto-generated method stub
 		sqlSession.insert("insert", boardAttach);
 	}

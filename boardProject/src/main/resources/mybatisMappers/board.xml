@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.boardapp.dao.BoardDao">
-	<insert id="insertBoard" parameterType="java.util.HashMap">
+	<insert id="insertBoard" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO board(
 		title,
 		content,

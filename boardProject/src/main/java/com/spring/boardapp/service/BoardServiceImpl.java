@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.boardapp.dao.BoardAttachDao;
 import com.spring.boardapp.dao.BoardDao;
 import com.spring.boardapp.domain.Board;
+import com.spring.boardapp.domain.BoardAttach;
 import com.spring.boardapp.domain.Reply;
 import com.spring.boardapp.domain.paging.Paging;
 
@@ -28,8 +29,24 @@ public class BoardServiceImpl implements BoardService {
 		if (paramMap.get("title") == null || paramMap.get("writer") == null) {
 			return 0;
 		} else {
+			int attachSize = (paramMap.size()-3)/4;
+			
 			int result = boardDao.insertBoard(paramMap);
-			//if(paramMap.get("attachList") == null || paramMap.get("attachList").size() <= 0)
+			String id = String.valueOf(paramMap.get("id"));
+			System.out.println(id);
+			System.out.println(paramMap);
+			
+			for(int i=0;i<attachSize;i++) {
+				String tmp = "attachList["+i+"].";
+				System.out.println(tmp);
+				String uuid = String.valueOf(paramMap.get(tmp+"uuid"));
+				String uploadPath = String.valueOf(paramMap.get(tmp+"uploadPath"));
+				String fileName = String.valueOf(paramMap.get(tmp+"fileName"));
+				boolean fileType = Boolean.parseBoolean(String.valueOf(paramMap.get(tmp+"fileType")));
+				
+				BoardAttach attach = new BoardAttach(uuid,uploadPath,fileName,fileType,id);
+				boardAttachDao.insert(attach);
+			}
 			
 			return result;
 		}

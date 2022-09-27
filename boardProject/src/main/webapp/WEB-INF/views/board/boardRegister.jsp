@@ -121,8 +121,6 @@ table {
 				
 				console.log("submit clicked");
 				
-				formObj.submit();
-				
 				var str = "";
 				
 				$(".uploadResult ul li").each(function(i, obj){
@@ -136,10 +134,10 @@ table {
 				    //게시글 등록은 <form> 태그를 통해서 이루어진다.
 				    //이미 업로드된 정보는 별도의 <input type='hidden'> 태그를 생성해서 처리한다.
 				    //Board에서 이에 대한 List 이름이 attachList이므로 name을 맞춰준다.
-				    str += "<input type='hidden' id ='attachList["+i+"].fileName' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
-				    str += "<input type='hidden' id ='attachList["+i+"].uuid' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
-				    str += "<input type='hidden' id ='attachList["+i+"].uploadPath' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
-				    str += "<input type='hidden' id ='attachList["+i+"].fileType' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				    str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
 				      
 				});
 				

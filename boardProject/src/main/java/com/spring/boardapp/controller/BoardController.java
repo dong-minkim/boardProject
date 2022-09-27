@@ -32,6 +32,7 @@ public class BoardController {
 			return "board/boardRegister";
 		else {
 				System.out.println(paramMap.size());
+				System.out.println(paramMap.toString());
 			int result = boardService.insertBoard(paramMap);
 			if (result > 0)
 				return "redirect:/board/list";
