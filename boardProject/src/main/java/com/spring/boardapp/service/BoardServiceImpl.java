@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.boardapp.dao.BoardAttachDao;
 import com.spring.boardapp.dao.BoardDao;
@@ -41,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 				String fileName = String.valueOf(paramMap.get(tmp+"fileName"));
 				String fileType = String.valueOf(paramMap.get(tmp+"fileType"));
 				
-				BoardAttach attach = new BoardAttach(uuid,uploadPath,fileName,fileType,id);
+				BoardAttach attach = new BoardAttach(uuid,uploadPath,fileName,Boolean.parseBoolean(fileType),id);
 				boardAttachDao.insert(attach);
 			}
 			
@@ -61,11 +62,12 @@ public class BoardServiceImpl implements BoardService {
 		if(result == 1) return true;
 		else return false;
 	}
-
+	
+	@Transactional
 	@Override
 	public boolean deleteBoard(String id) {
-		if(boardDao.deleteBoard(id)==1) return true;
-		else return false;
+		boardAttachDao.deleteAllAttach(id);
+		return boardDao.deleteBoard(id) == 1;
 	}
 
 	@Override

@@ -10,4 +10,6 @@ public interface BoardAttachDao {
 	public void delete(String uuid);
 	
 	public List<BoardAttach> findBoardAttach(String board_id);
+	
+	public void deleteAllAttach(String board_id);
 }

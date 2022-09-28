@@ -21,12 +21,18 @@ public class BoardAttachDaoImpl implements BoardAttachDao {
 	}
 	@Override
 	public void delete(String uuid) {
-		sqlSession.delete("uuid", uuid);
+		sqlSession.delete("delete", uuid);
 		
 	}
 	@Override
 	public List<BoardAttach> findBoardAttach(String board_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("findBoardAttach", board_id);
+	}
+	
+	@Override
+	public void deleteAllAttach(String board_id) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("deleteAllAttach", board_id);
 	}
 }

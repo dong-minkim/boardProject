@@ -4,13 +4,13 @@ public class BoardAttach {
 	private String uuid;
 	private String uploadPath;
 	private String fileName;
-	private String fileType;
+	private boolean fileType;
 
 	private String board_id;
 	
 	public BoardAttach() {};
 	
-	public BoardAttach(String uuid, String uploadPath, String fileName, String fileType, String board_id){
+	public BoardAttach(String uuid, String uploadPath, String fileName, boolean fileType, String board_id){
 		this.uuid=uuid;
 		this.uploadPath=uploadPath;
 		this.fileName=fileName;
@@ -21,7 +21,7 @@ public class BoardAttach {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.getBoard_id() + " " + this.getUuid()+" "+this.getUploadPath() + " " + this.getFileName() + " " +this.getFileType();
+		return this.getBoard_id() + " " + this.getUuid()+" "+this.getUploadPath() + " " + this.getFileName() + " " +this.isFileType();
 	}
 
 	public String getUuid() {
@@ -48,11 +48,11 @@ public class BoardAttach {
 		this.fileName = fileName;
 	}
 
-	public String getFileType() {
+	public boolean isFileType() {
 		return fileType;
 	}
 
-	public void setFileType(String fileType) {
+	public void setFileType(boolean fileType) {
 		this.fileType = fileType;
 	}
 

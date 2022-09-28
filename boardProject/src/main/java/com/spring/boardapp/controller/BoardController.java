@@ -1,5 +1,8 @@
 package com.spring.boardapp.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.boardapp.dao.BoardAttachDao;
 import com.spring.boardapp.domain.Board;
 import com.spring.boardapp.domain.BoardAttach;
 import com.spring.boardapp.domain.paging.Paging;
@@ -82,8 +86,43 @@ public class BoardController {
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount) {
-		boardService.deleteBoard(id);
+		
+		List<BoardAttach> attachList = boardService.getAttachList(id);
+		
+		if(boardService.deleteBoard(id)) {
+			deleteFiles(attachList);
+		}
+		
 		return "redirect:/board/list?pageNum="+pageNum+"&pageAmount="+pageAmount;
+	}
+	
+	//폴더에 있는 파일 지우기
+	private void deleteFiles(List<BoardAttach> attachList) {
+
+		if (attachList == null || attachList.size() == 0) {
+			return;
+		}
+
+		for (BoardAttach attach : attachList) {
+			try {
+				Path file = Paths.get(
+						"C:\\upload\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
+
+				Files.deleteIfExists(file);
+
+				// 이미지 파일인 경우 섬네일 파일도 추가 삭제
+				if (Files.probeContentType(file).startsWith("image")) {
+
+					Path thumbNail = Paths.get("C:\\upload\\" + attach.getUploadPath() + "\\s_" + attach.getUuid() + "_"
+							+ attach.getFileName());
+
+					Files.delete(thumbNail);
+				}
+
+			} catch (Exception e) {
+				System.out.println("delete file error" + e.getMessage());
+			} // end catch
+		}
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

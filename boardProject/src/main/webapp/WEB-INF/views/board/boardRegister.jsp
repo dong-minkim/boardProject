@@ -94,9 +94,9 @@ table {
 		</tr>
 	</table>
 	</form>
-	
-	<div style="width: 930px; margin:auto">
-    <div>File Attach</div>
+	<br />
+	<div style="border-radius: 7px; border: 2px solid; border-color: silver; width: 930px; margin: auto;  ">
+    <div style="text-align: center;"><strong> Attachment </strong></div><br>
     	<div>
         	<div class="uploadDiv">
             	<input type="file" name='uploadFile' multiple>
@@ -227,7 +227,7 @@ table {
 						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' >";
 						str += "<div><span> "+ obj.fileName+"</span>";
 						str += "<button type='button' style='border-radius:20px' data-file=\'"+fileCallPath+"\' data-type='file' " 
-						str += ">x<i class='fa fa-times'></i></button><br>";
+						str += ">x</button><br>";
 						str += "<img src='/resources/img/attach.png'></a>";
 						str += "</div></li>";
 					}

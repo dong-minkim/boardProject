@@ -17,7 +17,6 @@ h1, h2 {
 table {
 	margin: auto;
 }
-<style>
 .uploadResult {
   width:100%;
   background-color: green;

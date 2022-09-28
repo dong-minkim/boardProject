@@ -14,7 +14,7 @@
 				#{fileType},
 				#{board_id})
 	</insert>
-	<delete id="delete">
+	<delete id="delete" parameterType="String">
 		DELETE FROM attach WHERE uuid = #{uuid}
 	</delete>
 	<select id="findBoardAttach" parameterType="String" resultType="com.spring.boardapp.domain.BoardAttach">
@@ -22,4 +22,8 @@
 		FROM attach
 		WHERE board_id = #{board_id}
 	</select>
+	<delete id="deleteAllAttach" parameterType="String">
+		DELETE FROM attach
+		WHERE board_id = #{board_id}
+	</delete>
 </mapper>
