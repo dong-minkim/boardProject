@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +66,8 @@ table {
 </head>
 <body>
 	<h2>게시글 작성</h2>
-	<form action="/board/regist", method = "post">
+	<form action="/board/regist" method = "post">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<table border="1" width="930px">
 		<caption><strong>* 표시는 필수입력</strong></caption>
 		
@@ -72,14 +75,14 @@ table {
 			<col width="20%">
 			<col width="80%">
 		</colgroup>
-		
 		<tr>
 			<th>제목 *</th>
 			<td><input type="text" style="width:300px;border:none" name="title" id="title" required />
 		</tr>
 		<tr>
-			<th>작성자 *</th>
-			<td><input type="text" style="width:300px;border:none" name="writer" id="writer" required />
+			<th>작성자 </th>
+			<td><input type="text" style="width:300px;border:none" name="writer" id="writer" 
+					   value="<sec:authentication property='principal.username'/>" readonly="readonly" />
 		</tr>
 		<tr height = "300px">
 			<th>내용</th>

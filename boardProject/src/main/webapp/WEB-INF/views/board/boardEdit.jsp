@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,9 +77,11 @@ table {
 </head>
 <body>
 	<h2>게시글 수정</h2>
-	<form action="/board/edit/${board.id}" , method="post">
-		<input type="hidden" name="pageNum" value="${pageNum }"> <input
-			type="hidden" name="pageAmount" value="${pageAmount}">
+	<form action="/board/edit/${board.id}" method="post">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+		<input type="hidden" name="pageNum" value="${pageNum }"> 
+		<input type="hidden" name="pageAmount" value="${pageAmount}">
+		<input type="hidden" name="id" id="id" value="${board.id }" />
 		<table border="1" width="930px">
 			<caption>
 				<strong>* 표시: 수정 가능</strong>
@@ -88,7 +91,6 @@ table {
 				<col width="20%">
 				<col width="80%">
 			</colgroup>
-			<input type="hidden" name="id" id="id" value="${board.id }" />
 			<tr>
 				<th>제목 *</th>
 				<td><input type="text" style="width: 300px; border: none"
@@ -96,7 +98,7 @@ table {
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td><strong>${board.writer }</strong>
+				<td><input type="text" style="border:none" name="writer" value="${board.writer }" readonly="readonly"/>
 			</tr>
 			<tr height="300px">
 				<th>내용*</th>

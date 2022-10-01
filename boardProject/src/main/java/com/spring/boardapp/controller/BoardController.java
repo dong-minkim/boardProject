@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class BoardController {
 	private BoardService boardService;
 
 	@RequestMapping(value = "/regist")
+	@PreAuthorize("isAuthenticated()") //로그인 성공한 사용자만 이용 가능
 	public String registBoard(@RequestParam Map<String, Object> paramMap, Model model) {
 		if (paramMap.isEmpty())
 			return "board/boardRegister";
@@ -50,7 +52,7 @@ public class BoardController {
 				return "/board/boardRegister";
 		}
 	}
-
+	
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	public String getBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, 
 							@RequestParam(required=false) String searchType, @RequestParam(required=false) String searchWord,Model model) {
@@ -67,9 +69,10 @@ public class BoardController {
 
 		}
 	}
-
+	
+	@PreAuthorize("principal.username == #writer")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String updateBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, Model model) {
+	public String updateBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, Model model,String writer) {
 		model.addAttribute("board",boardService.getBoardDetail(id));
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("pageAmount", pageAmount);
@@ -84,8 +87,9 @@ public class BoardController {
 		return "redirect:/board/detail/{id}?pageNum="+pageNum+"&pageAmount="+pageAmount;
 	}
 	
+	@PreAuthorize("principal.username == #writer")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount) {
+	public String deleteBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, String writer) {
 		
 		List<BoardAttach> attachList = boardService.getAttachList(id);
 		

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,12 +85,20 @@ table {
 				<input type="button" value="목록"
 				onclick="location.href='/board/list?searchType=${searchType }&searchWord=${searchWord }&pageNum=${pageNum }&pageAmount=${pageAmount}'">
 			</td>
-			<td align="right"><div>
-					<input type="button" value="수정"
-						onclick="location.href='/board/edit/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">
-					<input type="button" value="삭제"
-						onclick="location.href='/board/delete/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">
-				</div></td>
+			<td align="right">
+				<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">
+					<c:if test="${pinfo.username eq board.writer }">
+						<div>
+						<form method="get">
+							<input type="hidden" name="writer" value="${board.writer}"/>
+							<button type="submit" value="수정" onclick="location.href='/board/edit/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">수정</button>
+							<button type="submit" value="삭제" onclick="location.href='/board/delete/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">삭제</button>
+						</form>
+						</div>
+					</c:if>
+				</sec:authorize>
+			</td>
 		</tr>
 	</table>
 	<table border="1" width="930px">
@@ -131,7 +140,7 @@ table {
 	<!-- Reply -->
 	<div style="width: 930px; margin: auto;">
 		<br>
-		
+		<sec:authorize access="isAuthenticated()">
 		<div style="border-radius: 7px; border: 2px solid; border-color: silver;  ">
 			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
 			<div>
@@ -142,19 +151,21 @@ table {
 			<br>
 			<div>
 				<label style="padding:15px">내용</label><br>
-				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:95%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content" value=""></textarea>
+				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:95%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content"></textarea>
 <!-- 				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px;" id="reply_content" name="reply_content" value="">	 -->
 			</div>
 				<br>
 				<br>
 			<div style="float:right; padding:10px;">
-			<button id="registReplyBtn" style ="height:25px; border-radius: 20px;"">
+			<button id="registReplyBtn" style ="height:25px; border-radius: 20px;">
 				Register
 			</button>
 			</div>
 				<br>
 				<br>
-		</div>
+		</div>	
+		</sec:authorize>
+		
 		<br>
 		<br>
 		<div>
