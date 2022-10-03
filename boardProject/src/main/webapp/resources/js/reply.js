@@ -64,10 +64,14 @@
  		});
  	}
  	
- 	function remove(reply_id, callback, error){
+ 	function remove(reply_id, reply_writer ,callback, error){
  		$.ajax({
  			type : 'delete',
  			url : '/reply/' + reply_id,
+ 			
+ 			data : JSON.stringify({reply_id:reply_id, reply_writer:reply_writer}),
+ 			contentType: "application/json; charset=utf-8",
+ 			
  			success : function(deleteResult, status, xhr){
  				if(callback){
  					callback(deleteResult);

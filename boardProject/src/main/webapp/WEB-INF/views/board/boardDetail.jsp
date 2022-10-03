@@ -144,16 +144,16 @@ table {
 		<!-- Reply Register -->
 		<sec:authorize access="isAuthenticated()">
 		<div style="border-radius: 7px; border: 2px solid; border-color: silver;  ">
-			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
+			<div style="text-align: center;"><strong> Write Reply </strong></div><br>
 			<div>
 				<label style="padding:15px">작성자</label><br>
-				<input type="text" style="border-color: silver; border-radius: 15px;width:95%; height:40px; margin:10px; padding:10px" id="reply_writer" name="reply_writer" value="">
+				<input type="text" id="reply_writer" name="reply_writer" value="<sec:authentication property='principal.username'/>" readonly="readonly" style="border-color: silver; border-radius: 15px;width:95%; height:40px; margin:10px; padding:10px"  >
 			</div>
 			<br>
 			<br>
 			<div>
 				<label style="padding:15px">내용</label><br>
-				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:95%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content"></textarea>
+				<textarea rows="" cols="" style="border-color: silver; border-radius: 15px; width:95%; height:80px; margin:10px; padding:10px" id="reply_content" name="reply_content" value=""></textarea>
 <!-- 				<input type="text"style="border-color: silver; border-radius: 15px; width:98%; height:80px; margin:10px;" id="reply_content" name="reply_content" value="">	 -->
 			</div>
 				<br>
@@ -172,7 +172,7 @@ table {
 		<br>
 		<br>
 		<div>
-			<ul class="chat" style="padding-left: 0px;">
+			<ul class="replyList" style="padding-left: 0px;">
 			</ul>
 		</div>
 	</div>
@@ -185,7 +185,7 @@ table {
 		$(document).ready(function() {
 
 			var boardId = '<c:out value="${board.id}"/>';
-			var replyUL = $(".chat"); //class 걸어놓는것
+			var replyUL = $(".replyList"); //class 걸어놓는것
 			
 			showReplyList();
 
@@ -208,7 +208,9 @@ table {
 						str += "<li style='list-style:none; border-color: red; border: 1px solid;border-radius: 4px;'>";
 					    str += "<div style='padding:10px'><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
 						str += list[i].reply_datetime + "</small></div><p style='padding:10px'>" + list[i].reply_content +"</p>";
-						str += "<div><input type=button class='replyDeleteBtn'  data-delete='"+ list[i].reply_id + "' value='삭제'style='float:right; width:60px; height:30px; border-radius: 20px;'><br><br></div></li><br>";
+						str += "<div><input type=button class='replyDeleteBtn' "
+						str += "data-writer='" + list[i].reply_writer +"' data-curWriter='<sec:authentication property='principal.username'/>' "
+						str += "data-delete='"+ list[i].reply_id + "' value='삭제'style='float:right; width:60px; height:30px; border-radius: 20px;'><br><br></div></li><br>";
 					}
 					
 
@@ -218,12 +220,21 @@ table {
 				 });//end function
 			}//end showList
 			
+			var csrfHeaderName ="${_csrf.headerName}"; 
+			var csrfTokenValue="${_csrf.token}";
+			
+			$(document).ajaxSend(function(e, xhr, options) { 
+		        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+		    });
+			
+			
+			
 			$('#registReplyBtn').click(function(){
 				var registReplyWriter = document.getElementById('reply_writer').value.trim();
 				var registReplyContent = document.getElementById('reply_content').value.trim();
 				
-				if(registReplyWriter == "" || registReplyContent == ""){
-					alert("항목을 채워주세요");
+				if(registReplyContent == ""){
+					alert("댓글을 작성해주세요.");
 					
 				}
 				else{
@@ -238,7 +249,8 @@ table {
 							function(result){
 								alert(result);
 								showReplyList();
-								$('input[name=reply_writer]').attr('value',"");
+								$('#reply_writer').val(registReplyWriter);
+								$('#reply_content').val("");
 							}
 					);
 					
@@ -248,10 +260,27 @@ table {
 			
 			function replyDeleteBtn(){
 				
+				var curWriter = $(this).attr("data-curWriter");
+				var replyWriter = $(this).attr("data-writer");
 				var replyId = $(this).attr("data-delete");
+				
+				console.log(curWriter);
+				console.log(replyWriter);
+				console.log(replyId);
+				
+				if(!curWriter){
+					alert("로그인을 해주세요.");
+					return;
+				}
+				
+				if(curWriter != replyWriter){
+					alert("해당 댓글의 작성자가 아닙니다.");
+					return;
+				}
 				
 				replyService.remove(
 					replyId, 
+					replyWriter,
 					function(result) {
 						if(result==="success"){
 							alert("REMOVED");

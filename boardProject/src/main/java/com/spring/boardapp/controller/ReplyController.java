@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class ReplyController {
 	@Resource(name = "ReplyService")
 	private ReplyService replyService;
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new",
 				consumes = "application/json",            //클라가 서버에 보내는 데이터 형식
 				produces = {MediaType.TEXT_PLAIN_VALUE})  //서버가 클라에 보내는 데이터 형식
@@ -58,7 +60,8 @@ public class ReplyController {
 					value="/{reply_id}",
 					consumes = "application/json",
 					produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> modify(@RequestBody Reply reply, @PathVariable String reply_id){
+	public ResponseEntity<String> modify(@RequestBody Reply reply, 
+										 @PathVariable String reply_id){
 		
 		reply.setReply_id(reply_id); //요청 데이터 댓글 번호 처리
 		System.out.println("수정 호출됨");
@@ -67,9 +70,14 @@ public class ReplyController {
 												new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@PreAuthorize("principal.username == #reply.reply_writer")
 	@DeleteMapping(value = "/{reply_id}",
 					produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> delete(@PathVariable String reply_id){
+	public ResponseEntity<String> delete(@RequestBody Reply reply,  
+										 @PathVariable String reply_id){
+		
+		System.out.println("replyWriter:" + reply.getReply_writer());
+		System.out.println("replyContent:" + reply.getReply_content());
 		
 		return replyService.deleteReply(reply_id) ? new ResponseEntity<String>("success", HttpStatus.OK):
 													new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);

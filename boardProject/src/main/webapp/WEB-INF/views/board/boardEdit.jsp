@@ -192,6 +192,9 @@ table {
 			    return true;
 			}
 			
+			var csrfHeaderName ="${_csrf.headerName}"; 
+			var csrfTokenValue="${_csrf.token}";
+			
 						
 			//jquery change() 메소드
 			$("input[type='file']").change(function(e){
@@ -216,6 +219,9 @@ table {
 			    	url: '/uploadAjaxAction',
 			      	processData: false, 
 			      	contentType: false,
+			      	beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 			      	data:formData,
 			      	type: 'POST',
 			      	dataType:'json',
@@ -274,6 +280,9 @@ table {
 			    $.ajax({
 			    	url: '/deleteFile',
 			      	data: {fileName: targetFile, type:type},
+			      	beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 			      	dataType:'text',
 			      	type: 'POST',
 			        success: function(result){
