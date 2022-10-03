@@ -3,6 +3,7 @@ package com.spring.boardapp.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +39,9 @@ public class BoardController {
 	private BoardService boardService;
 
 	@RequestMapping(value = "/regist")
-	@PreAuthorize("isAuthenticated()") //로그인 성공한 사용자만 이용 가능
-	public String registBoard(@RequestParam Map<String, Object> paramMap, Model model) {
-		if (paramMap.isEmpty())
+	@PreAuthorize("isAuthenticated()") //로그인한 사용자 모두 등록 가능
+	public String registBoard(@RequestParam Map<String, Object> paramMap, Model model, Principal principal) {
+		if (paramMap.isEmpty() || principal == null)
 			return "board/boardRegister";
 		else {
 				System.out.println(paramMap.size());

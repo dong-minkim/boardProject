@@ -8,18 +8,14 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<bean id="customAccessDenied" class="com.spring.boardapp.security.CustomAccessDeniedHandler"></bean>
-	<bean id="customLoginSuccess" class="com.spring.boardapp.security.CustomLoginSuccessHandler"></bean>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="customUserDetailsService" class="com.spring.boardapp.security.CustomUserDetailsService"></bean>
 	
-	<security:http auto-config="true">	
-		<security:intercept-url pattern="/sample/all" access="permitAll" />
-		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
-		
-		<security:access-denied-handler ref="customAccessDenied"/>
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
-		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+	<security:http>	
+		<security:form-login login-page="/customLogin" />
+		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
+		<security:remember-me  token-validity-seconds="604800"/> <!-- 60 * 60 * 24 * 7 -->
+		<security:access-denied-handler ref="customAccessDenied" />
 	</security:http>
 	
 	

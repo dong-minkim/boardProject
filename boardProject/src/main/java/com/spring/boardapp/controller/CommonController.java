@@ -38,8 +38,9 @@ public class CommonController {
 	}
 
 	@PostMapping("/customLogout")
-	public void logoutPost() {
+	public String logoutPost() {
 		System.out.println("post custom logout");
+		return "redirect:/board/list";
 	}
 
 }

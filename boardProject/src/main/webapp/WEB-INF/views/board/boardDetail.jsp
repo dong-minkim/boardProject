@@ -140,6 +140,8 @@ table {
 	<!-- Reply -->
 	<div style="width: 930px; margin: auto;">
 		<br>
+		
+		<!-- Reply Register -->
 		<sec:authorize access="isAuthenticated()">
 		<div style="border-radius: 7px; border: 2px solid; border-color: silver;  ">
 			<div style="text-align: center;"><strong> Writer Reply </strong></div><br>
@@ -166,6 +168,7 @@ table {
 		</div>	
 		</sec:authorize>
 		
+		<!-- Reply List -->
 		<br>
 		<br>
 		<div>

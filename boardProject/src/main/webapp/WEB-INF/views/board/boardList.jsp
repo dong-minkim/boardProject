@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,21 @@
 	<h2><c:if test="${pageMaker.searchWord!='' }">"${pageMaker.searchWord }" 검색 결과</c:if></h2>
 	<table width="930px">
 		<tr>
+			<td>
+				<sec:authorize access="isAnonymous()">
+					<input type="button" value="로그인" onclick="location.href='/customLogin'">
+<!-- 					<a href="/customLogin">로그인</a> -->
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<form role="form" method="post" action="/customLogout">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<input type="submit" value="로그아웃" />
+					</form>
+				</sec:authorize>
+			</td>
+		
+<!-- 					<input type="button" value="로그아웃" onclick="location.href='/customLogout'"> -->
+<!-- 					<a href="/customLogout">로그아웃</a> -->
 			<td align="right"><input type="button" value="글 작성" onclick="location.href='/board/regist'">
 		</tr>
 	</table>
