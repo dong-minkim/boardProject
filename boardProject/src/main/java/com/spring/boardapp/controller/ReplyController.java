@@ -78,6 +78,7 @@ public class ReplyController {
 		
 		System.out.println("replyWriter:" + reply.getReply_writer());
 		System.out.println("replyContent:" + reply.getReply_content());
+		System.out.println("replyId: " + reply.getReply_id());
 		
 		return replyService.deleteReply(reply_id) ? new ResponseEntity<String>("success", HttpStatus.OK):
 													new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);

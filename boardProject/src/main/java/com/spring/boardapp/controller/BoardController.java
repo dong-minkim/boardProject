@@ -71,7 +71,6 @@ public class BoardController {
 		}
 	}
 	
-	@PreAuthorize("principal.username == #writer")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String updateBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, Model model,String writer) {
 		model.addAttribute("board",boardService.getBoardDetail(id));
@@ -88,7 +87,6 @@ public class BoardController {
 		return "redirect:/board/detail/{id}?pageNum="+pageNum+"&pageAmount="+pageAmount;
 	}
 	
-	@PreAuthorize("principal.username == #writer")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteBoard(@PathVariable String id,@RequestParam String pageNum, @RequestParam String pageAmount, String writer) {
 		

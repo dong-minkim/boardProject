@@ -90,11 +90,8 @@ table {
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username eq board.writer }">
 						<div>
-						<form method="get">
-							<input type="hidden" name="writer" value="${board.writer}"/>
-							<button type="submit" value="수정" onclick="location.href='/board/edit/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">수정</button>
-							<button type="submit" value="삭제" onclick="location.href='/board/delete/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">삭제</button>
-						</form>
+							<button type="button" onclick="location.href='/board/edit/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">수정</button>
+							<button type="button" onclick="location.href='/board/delete/${board.id}?pageNum=${pageNum }&pageAmount=${pageAmount}'">삭제</button>
 						</div>
 					</c:if>
 				</sec:authorize>
