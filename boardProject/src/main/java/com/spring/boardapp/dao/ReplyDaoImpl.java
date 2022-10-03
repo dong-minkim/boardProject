@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.boardapp.domain.Reply;
 
-@Repository("ReplyDao")
+@Repository("replyDao")
 public class ReplyDaoImpl implements ReplyDao {
 	
 	@Autowired
@@ -44,5 +44,11 @@ public class ReplyDaoImpl implements ReplyDao {
 	public int deleteReply(String reply_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("deleteReply", reply_id);
+	}
+	
+	@Override
+	public int deleteAllReply(String board_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("deleteAllReply", board_id);
 	}
 }

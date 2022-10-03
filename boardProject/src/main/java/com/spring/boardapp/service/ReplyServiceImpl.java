@@ -16,7 +16,7 @@ import com.spring.boardapp.domain.Reply;
 @Service("ReplyService")
 public class ReplyServiceImpl implements ReplyService {
 
-	@Resource(name = "ReplyDao")
+	@Resource(name = "replyDao")
 	private ReplyDao replyDao;
 	
 	@Resource(name = "boardDao")
@@ -73,4 +73,6 @@ public class ReplyServiceImpl implements ReplyService {
 		}
 		else return false;
 	}
+	
+	
 }

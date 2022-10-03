@@ -20,4 +20,7 @@ public interface ReplyDao {
 
 	// 댓글 삭제
 	int deleteReply(String reply_id);
+	
+	// 게시물 댓글들 삭제
+	int deleteAllReply(String board_id);
 }

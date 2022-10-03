@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.boardapp.dao.BoardAttachDao;
 import com.spring.boardapp.dao.BoardDao;
+import com.spring.boardapp.dao.ReplyDao;
 import com.spring.boardapp.domain.Board;
 import com.spring.boardapp.domain.BoardAttach;
 import com.spring.boardapp.domain.Reply;
@@ -23,6 +24,9 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Resource(name = "BoardAttachDao")
 	private BoardAttachDao boardAttachDao;
+	
+	@Resource(name = "replyDao")
+	private ReplyDao replyDao;
 
 	@Override
 	public int insertBoard(Map<String, Object> paramMap) {
@@ -67,6 +71,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean deleteBoard(String id) {
 		boardAttachDao.deleteAllAttach(id);
+		replyDao.deleteAllReply(id);
 		return boardDao.deleteBoard(id) == 1;
 	}
 

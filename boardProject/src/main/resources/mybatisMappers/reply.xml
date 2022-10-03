@@ -38,4 +38,8 @@
 		DELETE FROM board_reply
 		WHERE reply_id = #{reply_id}
 	</delete>
+	<delete id="deleteAllReply" parameterType="String">
+		DELETE FROM board_reply
+		WHERE board_id = #{board_id}
+	</delete>
 </mapper>
