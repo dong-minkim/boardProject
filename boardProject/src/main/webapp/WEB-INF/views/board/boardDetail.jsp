@@ -45,7 +45,6 @@ table {
   border:3px solid white;
   border-radius:10px;
   padding: 10px;
-  
   margin: 5px;
   font-weight: bold;
   color:white;
@@ -78,6 +77,7 @@ table {
 </head>
 <body>
 	<h1>게시글(${board.id })</h1>
+	<sec:authentication property="principal" var="pinfo"/>
 	<table width="930px">
 		<tr>
 			<td align="left">
@@ -86,7 +86,6 @@ table {
 				onclick="location.href='/board/list?searchType=${searchType }&searchWord=${searchWord }&pageNum=${pageNum }&pageAmount=${pageAmount}'">
 			</td>
 			<td align="right">
-				<sec:authentication property="principal" var="pinfo"/>
 				<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username eq board.writer }">
 						<div>
@@ -174,7 +173,6 @@ table {
 		</div>
 	</div>
 
-	<button data-delete="hi"></button>
 
 	<!-- 댓글 -->
 	<script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -183,6 +181,12 @@ table {
 
 			var boardId = '<c:out value="${board.id}"/>';
 			var replyUL = $(".replyList"); //class 걸어놓는것
+			
+			var loginName = null;
+			<sec:authorize access="isAuthenticated()">
+			loginName =	"<sec:authentication property='principal.username'/>";
+			</sec:authorize>
+			
 			
 			showReplyList();
 
@@ -205,9 +209,17 @@ table {
 						str += "<li style='list-style:none; border-color: red; border: 1px solid;border-radius: 4px;'>";
 					    str += "<div style='padding:10px'><strong>"+ list[i].reply_writer + "</strong><small style='float: right'>";
 						str += list[i].reply_datetime + "</small></div><p style='padding:10px'>" + list[i].reply_content +"</p>";
-						str += "<div><input type=button class='replyDeleteBtn' "
-						str += "data-writer='" + list[i].reply_writer +"' data-curWriter='<sec:authentication property='principal.username'/>' "
-						str += "data-delete='"+ list[i].reply_id + "' value='삭제'style='float:right; width:60px; height:30px; border-radius: 20px;'><br><br></div></li><br>";
+						if(loginName == list[i].reply_writer){
+						
+						console.log(loginName+" "+list[i].reply_writer);
+						str += "<div><input type='button' class='replyDeleteBtn'";
+						str += " data-writer='" + list[i].reply_writer +"'";
+						str += " data-curWriter='"+loginName +"'";
+						str += " data-delete='"+ list[i].reply_id + "'";
+						str += " value='삭제' style='float:right; width:60px; height:30px; border-radius: 20px'/>";
+						str += "<br><br></div>";
+						}
+						str +="</li><br>";
 					}
 					
 

@@ -20,13 +20,13 @@
 		</div>
 		<div style="margin:auto">
 			<form method="post" action="/login">
-				<table border="1"  style="width: 400px; margin:auto">
+				<table style="width: 400px; margin:auto">
 					<tr>
 						<td colspan="3" align="right"><input type="button" value="목록" onclick="location.href='/board/list'"></td>
 					</tr>
 				</table>
 				<fieldset>
-					<table border="1" style="width: 320px; margin:auto">
+					<table style="width: 320px; margin:auto">
 						<tr>
 							<td align="right"><label style="width: 100px">ID:</label>
 							<td colspan="2"><input type="text" name="username" placeholder="userid" style="width:300px" autofocus></td>

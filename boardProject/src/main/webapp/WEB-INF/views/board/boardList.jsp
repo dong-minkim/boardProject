@@ -31,6 +31,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<form role="form" method="post" action="/customLogout">
+						<sec:authentication property='principal.username'/>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="submit" value="로그아웃" />
 					</form>
